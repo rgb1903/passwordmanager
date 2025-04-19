@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/passwordListFragment">
+
+    <fragment
+        android:id="@+id/passwordListFragment"
+        android:name="com.example.passwordmanager.presentation.passwords.list.PasswordListFragment"
+        android:label="Şifreler">
+        <action
+            android:id="@+id/action_passwordList_to_detail"
+            app:destination="@id/passwordDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/passwordDetailFragment"
+        android:name="com.example.passwordmanager.presentation.passwords.detail.PasswordDetailFragment"
+        android:label="Şifre Detay">
+        <argument
+            android:name="password"
+            app:argType="com.example.passwordmanager.domain.model.Password"
+            app:nullable="true" />
+    </fragment>
+
+</navigation>

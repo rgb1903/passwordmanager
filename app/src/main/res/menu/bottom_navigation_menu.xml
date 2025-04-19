@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_passwords"
+        android:icon="@drawable/ic_password"
+        android:title="@string/passwords" />
+    <item
+        android:id="@+id/nav_categories"
+        android:icon="@drawable/ic_category"
+        android:title="@string/categories" />
+</menu>
