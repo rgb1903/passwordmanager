@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Ortak Renkler -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <color name="error_red">#D32F2F</color>
+    <color name="card_background">#FFFFFF</color>
+
+    <!-- Mavi Tema -->
+    <color name="background_light_blue">#E3F2FD</color>
+    <color name="accent_blue">#1976D2</color>
+    <color name="card_background_blue">#F5F9FF</color>
+    <color name="text_primary_blue">#212121</color>
+    <color name="text_secondary_blue">#757575</color>
+
+    <!-- Yeşil Tema -->
+    <color name="background_light_green">#E8F5E9</color>
+    <color name="accent_green">#388E3C</color>
+    <color name="card_background_green">#F1F8E9</color>
+    <color name="text_primary_green">#1B5E20</color>
+    <color name="text_secondary_green">#4CAF50</color>
+
+    <!-- Mor Tema -->
+    <color name="background_light_purple">#F3E5F5</color>
+    <color name="accent_purple">#7B1FA2</color>
+    <color name="card_background_purple">#FCE4EC</color>
+    <color name="text_primary_purple">#4A0072</color>
+    <color name="text_secondary_purple">#9C27B0</color>
 </resources>

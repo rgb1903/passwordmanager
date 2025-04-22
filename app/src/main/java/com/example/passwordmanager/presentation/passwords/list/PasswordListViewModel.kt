@@ -3,8 +3,8 @@ package com.example.passwordmanager.presentation.passwords.list
 import androidx.lifecycle.viewModelScope
 import com.example.passwordmanager.common.base.BaseViewModel
 import com.example.passwordmanager.domain.model.Password
+import com.example.passwordmanager.domain.repository.PasswordRepository
 import com.example.passwordmanager.domain.usecase.password.DeletePasswordUseCase
-import com.example.passwordmanager.domain.usecase.password.GetPasswordsUseCase
 import com.example.passwordmanager.domain.usecase.password.SearchPasswordsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PasswordListViewModel @Inject constructor(
-    private val getPasswordsUseCase: GetPasswordsUseCase,
+    private val repository: PasswordRepository, // Doğrudan repository enjekte ediliyor
     private val deletePasswordUseCase: DeletePasswordUseCase,
     private val searchPasswordsUseCase: SearchPasswordsUseCase
 ) : BaseViewModel() {
@@ -24,15 +24,12 @@ class PasswordListViewModel @Inject constructor(
     private val _state = MutableStateFlow(PasswordListState())
     val state: StateFlow<PasswordListState> = _state.asStateFlow()
 
-    init {
-        loadPasswords()
-    }
-
-    private fun loadPasswords() {
+    fun loadPasswords(categoryId: Long) {
         viewModelScope.launch {
             try {
                 showLoading()
-                getPasswordsUseCase().collect { passwords ->
+                repository.getPasswordsByCategory(categoryId).collect { passwords ->
+                    println("Loaded passwords for category $categoryId: $passwords")
                     _state.update {
                         it.copy(
                             passwords = passwords,
@@ -51,11 +48,11 @@ class PasswordListViewModel @Inject constructor(
         }
     }
 
-    fun searchPasswords(query: String) {
+    fun searchPasswords(query: String, categoryId: Long) {
         viewModelScope.launch {
             _state.update { it.copy(searchQuery = query) }
             if (query.isBlank()) {
-                loadPasswords()
+                loadPasswords(categoryId)
                 return@launch
             }
 
@@ -80,3 +77,4 @@ class PasswordListViewModel @Inject constructor(
         }
     }
 }
+

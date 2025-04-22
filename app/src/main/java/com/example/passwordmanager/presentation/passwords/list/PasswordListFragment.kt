@@ -4,112 +4,110 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.SearchView
-import androidx.core.view.isVisible
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.passwordmanager.common.base.BaseFragment
+import com.example.passwordmanager.R
 import com.example.passwordmanager.databinding.FragmentPasswordListBinding
 import com.example.passwordmanager.domain.model.Password
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class PasswordListFragment : BaseFragment() {
+class PasswordListFragment : Fragment() {
 
     private var _binding: FragmentPasswordListBinding? = null
     private val binding get() = _binding!!
-
     private val viewModel: PasswordListViewModel by viewModels()
-    private val passwordAdapter = PasswordAdapter(
-        onPasswordClick = { password -> navigateToPasswordDetail(password) },
-        onDeleteClick = { password -> viewModel.deletePassword(password) }
-    )
+    private lateinit var passwordAdapter: PasswordAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPasswordListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun initViews() {
-        setupRecyclerView()
-        setupSearchView()
-        setupAddButton()
-    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun observeData() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.state.collect { state ->
-                handleState(state)
-            }
+        val categoryId = arguments?.getLong("categoryId", -1L) ?: -1L
+        if (categoryId == -1L) {
+            Toast.makeText(context, "Please select a category first", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.categoryListFragment)
+            return
         }
+
+        setupRecyclerView(categoryId)
+        setupAddPasswordButton(categoryId)
+        observeState()
+        viewModel.loadPasswords(categoryId) // Şifreleri categoryId'ye göre yükle
     }
 
-    private fun setupRecyclerView() {
-        binding.recyclerViewPasswords.apply {
+    private fun setupRecyclerView(categoryId: Long) {
+        passwordAdapter = PasswordAdapter(
+            onPasswordClick = { password ->
+                navigateToPasswordDetail(password, categoryId)
+            },
+            onDeleteClick = { password ->
+                viewModel.deletePassword(password)
+            }
+        )
+
+        binding.rvPasswords.apply {
             adapter = passwordAdapter
-            layoutManager = LinearLayoutManager(requireContext())
-            addItemDecoration(
-                DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
-            )
+            layoutManager = LinearLayoutManager(context)
         }
     }
 
-    private fun setupSearchView() {
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
+    private fun observeState() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collect { state ->
+                    // Şifreleri RecyclerView'a yükle
+                    passwordAdapter.submitList(state.passwords)
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                viewModel.searchPasswords(newText.orEmpty())
-                return true
-            }
-        })
-    }
+                    // Yükleme durumu
+                    binding.rvPasswords.visibility = if (state.isLoading) View.GONE else View.VISIBLE
 
-    private fun setupAddButton() {
-        binding.fabAddPassword.setOnClickListener {
-            navigateToPasswordDetail(null)
-        }
-    }
+                    // Hata mesajı
+                    state.error?.let { error ->
+                        Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
+                        viewModel.state.value.copy(error = null) // Hata mesajını sıfırla
+                    }
 
-    private fun handleState(state: PasswordListState) {
-        with(binding) {
-            progressBar.isVisible = state.isLoading
-            passwordAdapter.submitList(state.passwords)
-
-            state.error?.let { error ->
-                showError(error)
-                viewModel.clearError()
-            }
-
-            state.message?.let { message ->
-                showMessage(message)
-                viewModel.clearMessage()
+                    // Başarı mesajı
+                    state.message?.let { message ->
+                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                        viewModel.state.value.copy(message = null) // Mesajı sıfırla
+                    }
+                }
             }
         }
     }
 
-    private fun navigateToPasswordDetail(password: Password?) {
-        val action = PasswordListFragmentDirections.actionPasswordListToDetail(password)
+    private fun navigateToPasswordDetail(password: Password?, categoryId: Long) {
+        val action = PasswordListFragmentDirections.actionPasswordListToDetail(
+            password = password,
+            categoryId = categoryId
+        )
         findNavController().navigate(action)
     }
 
-    private fun showError(message: String) {
-        Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
-    }
-
-    private fun showMessage(message: String) {
-        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
+    private fun setupAddPasswordButton(categoryId: Long) {
+        binding.fabAddPassword.setOnClickListener {
+            val action = PasswordListFragmentDirections.actionPasswordListToAddPassword(
+                password = null,
+                categoryId = categoryId
+            )
+            findNavController().navigate(action)
+        }
     }
 
     override fun onDestroyView() {

@@ -2,25 +2,90 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/passwordListFragment">
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.passwordmanager.presentation.login.LoginFragment"
+        android:label="Giriş">
+        <action
+            android:id="@+id/action_loginFragment_to_categoryListFragment"
+            app:destination="@id/categoryListFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/categoryListFragment"
+        android:name="com.example.passwordmanager.presentation.categories.CategoryListFragment"
+        android:label="Kategoriler">
+        <action
+            android:id="@+id/action_categoryList_to_passwordList"
+            app:destination="@id/passwordListFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim">
+            <argument
+                android:name="categoryId"
+                app:argType="long"
+                app:nullable="false" />
+        </action>
+    </fragment>
 
     <fragment
         android:id="@+id/passwordListFragment"
         android:name="com.example.passwordmanager.presentation.passwords.list.PasswordListFragment"
         android:label="Şifreler">
+        <argument
+            android:name="categoryId"
+            app:argType="long"
+            app:nullable="false" />
         <action
             android:id="@+id/action_passwordList_to_detail"
-            app:destination="@id/passwordDetailFragment" />
+            app:destination="@id/passwordDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim">
+            <argument
+                android:name="password"
+                app:argType="com.example.passwordmanager.domain.model.Password"
+                app:nullable="true" />
+            <argument
+                android:name="categoryId"
+                app:argType="long"
+                app:nullable="false" />
+        </action>
+        <action
+            android:id="@+id/action_passwordList_to_add_password"
+            app:destination="@id/passwordDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim">
+            <argument
+                android:name="password"
+                app:argType="com.example.passwordmanager.domain.model.Password"
+                app:nullable="true"
+                android:defaultValue="@null" />
+            <argument
+                android:name="categoryId"
+                app:argType="long"
+                app:nullable="false" />
+        </action>
     </fragment>
 
     <fragment
         android:id="@+id/passwordDetailFragment"
-        android:name="com.example.passwordmanager.presentation.passwords.detail.PasswordDetailFragment"
+        android:name="com.example.passwordmanager.presentation.password.detail.PasswordDetailFragment"
         android:label="Şifre Detay">
         <argument
             android:name="password"
             app:argType="com.example.passwordmanager.domain.model.Password"
             app:nullable="true" />
+        <argument
+            android:name="categoryId"
+            app:argType="long"
+            app:nullable="false" />
     </fragment>
 
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.passwordmanager.presentation.settings.SettingsFragment"
+        android:label="Ayarlar" />
 </navigation>
