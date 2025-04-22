@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="8dp"
     android:layout_marginVertical="4dp"
-    app:cardBackgroundColor="@color/white"
+    app:cardBackgroundColor="?attr/cardBackgroundColor"
     app:cardCornerRadius="12dp"
     app:cardElevation="2dp"
     app:cardUseCompatPadding="true">
@@ -23,7 +23,7 @@
             android:layout_height="24dp"
             android:src="@drawable/ic_category"
             android:contentDescription="Kategori ikonu"
-            app:tint="@color/accent_blue"
+            app:tint="?attr/colorAccent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:text="Kategori Adı"
             android:textSize="16sp"
-            android:textColor="@color/text_primary"
+            android:textColor="?attr/android:textColorPrimary"
             android:textStyle="bold"
             android:fontFamily="sans-serif-medium"
             app:layout_constraintStart_toEndOf="@id/ivCategoryIcon"

@@ -1,41 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Mavi Tema -->
-    <style name="Theme.PasswordManager.Blue" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.PasswordManager.Blue" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/accent_blue</item>
-        <item name="colorPrimaryVariant">@color/accent_blue</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="android:statusBarColor">@color/accent_blue</item>
-        <item name="android:windowBackground">@color/background_light_blue</item>
-        <item name="android:windowLightStatusBar">false</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowNoTitle">true</item>
+        <item name="colorPrimaryDark">@color/accent_blue</item>
+        <item name="colorAccent">@color/accent_blue</item>
+        <item name="android:background">@color/background_light_blue</item>
+        <item name="android:textColorPrimary">@color/text_primary_blue</item>
+        <item name="android:textColorSecondary">@color/text_secondary_blue</item>
+        <item name="cardBackgroundColor">@color/card_background_blue</item>
     </style>
 
     <!-- Yeşil Tema -->
-    <style name="Theme.PasswordManager.Green" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.PasswordManager.Green" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/accent_green</item>
-        <item name="colorPrimaryVariant">@color/accent_green</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="android:statusBarColor">@color/accent_green</item>
-        <item name="android:windowBackground">@color/background_light_green</item>
-        <item name="android:windowLightStatusBar">false</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowNoTitle">true</item>
+        <item name="colorPrimaryDark">@color/accent_green</item>
+        <item name="colorAccent">@color/accent_green</item>
+        <item name="android:background">@color/background_light_green</item>
+        <item name="android:textColorPrimary">@color/text_primary_green</item>
+        <item name="android:textColorSecondary">@color/text_secondary_green</item>
+        <item name="cardBackgroundColor">@color/card_background_green</item>
     </style>
 
     <!-- Mor Tema -->
-    <style name="Theme.PasswordManager.Purple" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.PasswordManager.Purple" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/accent_purple</item>
-        <item name="colorPrimaryVariant">@color/accent_purple</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="android:statusBarColor">@color/accent_purple</item>
-        <item name="android:windowBackground">@color/background_light_purple</item>
-        <item name="android:windowLightStatusBar">false</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowNoTitle">true</item>
+        <item name="colorPrimaryDark">@color/accent_purple</item>
+        <item name="colorAccent">@color/accent_purple</item>
+        <item name="android:background">@color/background_light_purple</item>
+        <item name="android:textColorPrimary">@color/text_primary_purple</item>
+        <item name="android:textColorSecondary">@color/text_secondary_purple</item>
+        <item name="cardBackgroundColor">@color/card_background_purple</item>
     </style>
 
-    <!-- Varsayılan Tema (Mavi) -->
-    <style name="Theme.PasswordManager" parent="Theme.PasswordManager.Blue" />
+    <!-- Turuncu Tema -->
+    <style name="Theme.PasswordManager.Orange" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/accent_orange</item>
+        <item name="colorPrimaryDark">@color/accent_orange</item>
+        <item name="colorAccent">@color/accent_orange</item>
+        <item name="android:background">@color/background_light_orange</item>
+        <item name="android:textColorPrimary">@color/text_primary_orange</item>
+        <item name="android:textColorSecondary">@color/text_secondary_orange</item>
+        <item name="cardBackgroundColor">@color/card_background_orange</item>
+    </style>
 
+    <!-- Kırmızı Tema -->
+    <style name="Theme.PasswordManager.Red" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/accent_red</item>
+        <item name="colorPrimaryDark">@color/accent_red</item>
+        <item name="colorAccent">@color/accent_red</item>
+        <item name="android:background">@color/background_light_red</item>
+        <item name="android:textColorPrimary">@color/text_primary_red</item>
+        <item name="android:textColorSecondary">@color/text_secondary_red</item>
+        <item name="cardBackgroundColor">@color/card_background_red</item>
+    </style>
+
+    <!-- Gri Tema -->
+    <style name="Theme.PasswordManager.Gray" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/accent_gray</item>
+        <item name="colorPrimaryDark">@color/accent_gray</item>
+        <item name="colorAccent">@color/accent_gray</item>
+        <item name="android:background">@color/background_light_gray</item>
+        <item name="android:textColorPrimary">@color/text_primary_gray</item>
+        <item name="android:textColorSecondary">@color/text_secondary_gray</item>
+        <item name="cardBackgroundColor">@color/card_background_gray</item>
+    </style>
+
+
+    <!-- Varsayılan Tema -->
+    <style name="AppTheme" parent="Theme.PasswordManager.Blue" />
 </resources>

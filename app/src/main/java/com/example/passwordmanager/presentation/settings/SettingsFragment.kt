@@ -34,7 +34,7 @@ class SettingsFragment : Fragment() {
 
         setupLanguageOptions()
         setupThemeOptions()
-        applyThemeUI() // Tema renklerini uygula
+        applyThemeUI()
     }
 
     private fun setupLanguageOptions() {
@@ -71,9 +71,21 @@ class SettingsFragment : Fragment() {
             Log.d("SettingsFragment", "Selected theme: green")
             changeTheme("green")
         }
+        binding.optionOrangeTheme.setOnClickListener {
+            Log.d("SettingsFragment", "Selected theme: orange")
+            changeTheme("orange")
+        }
         binding.optionPurpleTheme.setOnClickListener {
             Log.d("SettingsFragment", "Selected theme: purple")
             changeTheme("purple")
+        }
+        binding.optionRedTheme.setOnClickListener {
+            Log.d("SettingsFragment", "Selected theme: red")
+            changeTheme("red")
+        }
+        binding.optionGrayTheme.setOnClickListener {
+            Log.d("SettingsFragment", "Selected theme: gray")
+            changeTheme("gray")
         }
     }
 
@@ -93,11 +105,17 @@ class SettingsFragment : Fragment() {
         binding.checkBlueTheme.visibility = View.GONE
         binding.checkGreenTheme.visibility = View.GONE
         binding.checkPurpleTheme.visibility = View.GONE
+        binding.checkOrangeTheme.visibility = View.GONE
+        binding.checkGrayTheme.visibility = View.GONE
+        binding.checkRedTheme.visibility = View.GONE
 
         when (theme) {
             "blue" -> binding.checkBlueTheme.visibility = View.VISIBLE
             "green" -> binding.checkGreenTheme.visibility = View.VISIBLE
+            "orange" -> binding.checkOrangeTheme.visibility = View.VISIBLE
             "purple" -> binding.checkPurpleTheme.visibility = View.VISIBLE
+            "red" -> binding.checkRedTheme.visibility = View.VISIBLE
+            "gray" -> binding.checkGrayTheme.visibility = View.VISIBLE
         }
     }
 
@@ -118,12 +136,31 @@ class SettingsFragment : Fragment() {
                 R.color.text_secondary_green,
                 R.color.accent_green
             )
+            "orange" -> listOf(
+                R.color.card_background_orange,
+                R.color.text_primary_orange,
+                R.color.text_secondary_orange,
+                R.color.accent_orange
+            )
             "purple" -> listOf(
                 R.color.card_background_purple,
                 R.color.text_primary_purple,
                 R.color.text_secondary_purple,
                 R.color.accent_purple
             )
+            "red" -> listOf(
+                R.color.card_background_red,
+                R.color.text_primary_red,
+                R.color.text_secondary_red,
+                R.color.accent_red
+            )
+            "gray" -> listOf(
+                R.color.card_background_gray,
+                R.color.text_primary_gray,
+                R.color.text_secondary_gray,
+                R.color.accent_gray
+            )
+
             else -> listOf(
                 R.color.card_background_blue,
                 R.color.text_primary_blue,
@@ -145,6 +182,10 @@ class SettingsFragment : Fragment() {
         binding.tvBlueTheme.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
         binding.tvGreenTheme.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
         binding.tvPurpleTheme.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
+        binding.tvOrangeTheme.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
+        binding.tvRedTheme.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
+        binding.tvGrayTheme.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
+
 
         // Tik ikonları
         binding.checkTurkish.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
@@ -153,6 +194,10 @@ class SettingsFragment : Fragment() {
         binding.checkBlueTheme.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
         binding.checkGreenTheme.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
         binding.checkPurpleTheme.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
+        binding.checkOrangeTheme.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
+        binding.checkRedTheme.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
+        binding.checkGrayTheme.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
+
     }
 
     private fun changeLanguage(languageCode: String) {
@@ -176,7 +221,7 @@ class SettingsFragment : Fragment() {
         Log.d("SettingsFragment", "Theme saved to SharedPreferences: $theme, Success: $saved")
 
         updateThemeSelection(theme)
-        applyThemeUI() // UI'yi hemen güncelle
+        applyThemeUI()
         requireActivity().recreate()
     }
 

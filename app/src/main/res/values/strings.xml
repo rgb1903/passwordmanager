@@ -20,6 +20,9 @@
     <string name="blue_theme">Mavi</string>
     <string name="green_theme">Yeşil</string>
     <string name="purple_theme">Mor</string>
+    <string name="orange_theme">Turuncu</string>
+    <string name="red_theme">Kırmızı</string>
+    <string name="gray_theme">Gri</string>
     <string name="settings">Ayarlar</string>
 
 </resources>

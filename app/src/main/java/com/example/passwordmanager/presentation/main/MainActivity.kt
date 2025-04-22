@@ -1,6 +1,5 @@
 package com.example.passwordmanager.presentation.main
 
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -8,13 +7,13 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
-import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.passwordmanager.R
+import com.example.passwordmanager.common.utils.ThemeManager
 import com.example.passwordmanager.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -41,14 +40,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupTheme() {
-        val sharedPreferences = getSharedPreferences("settings_prefs", Context.MODE_PRIVATE)
-        val theme = sharedPreferences.getString("theme", "blue") ?: "blue"
+        val theme = ThemeManager.getCurrentTheme(this)
         Log.d("MainActivity", "Applying theme: $theme")
-        when (theme) {
-            "blue" -> setTheme(R.style.Theme_PasswordManager_Blue)
-            "green" -> setTheme(R.style.Theme_PasswordManager_Green)
-            "purple" -> setTheme(R.style.Theme_PasswordManager_Purple)
-        }
+        setTheme(ThemeManager.getThemeStyle(theme))
     }
 
     private fun setupToolbar() {
@@ -123,21 +117,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupStatusBar() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        val sharedPreferences = getSharedPreferences("settings_prefs", Context.MODE_PRIVATE)
-        val theme = sharedPreferences.getString("theme", "blue") ?: "blue"
-        val statusBarColorRes = when (theme) {
-            "blue" -> R.color.accent_blue
-            "green" -> R.color.accent_green
-            "purple" -> R.color.accent_purple
-            else -> R.color.accent_blue
-        }
+        val theme = ThemeManager.getCurrentTheme(this)
+        val themeColors = ThemeManager.getThemeColors(this, theme)
         Log.d("MainActivity", "Setting status bar color for theme: $theme")
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            window.statusBarColor = ContextCompat.getColor(this, statusBarColorRes)
+            window.statusBarColor = themeColors.statusBarColor
             window.decorView.systemUiVisibility = 0
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.statusBarColor = ContextCompat.getColor(this, statusBarColorRes)
+            window.statusBarColor = themeColors.statusBarColor
         }
     }
 

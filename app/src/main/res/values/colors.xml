@@ -28,4 +28,26 @@
     <color name="card_background_purple">#FCE4EC</color>
     <color name="text_primary_purple">#4A0072</color>
     <color name="text_secondary_purple">#9C27B0</color>
+
+    <!-- Yeni tema: Orange -->
+    <color name="background_light_orange">#FFF3E0</color>
+    <color name="accent_orange">#F57C00</color>
+    <color name="card_background_orange">#FFFFFF</color>
+    <color name="text_primary_orange">#212121</color>
+    <color name="text_secondary_orange">#757575</color>
+
+    <!-- Kırmızı Tema -->
+    <color name="background_light_red">#FFEBEE</color>
+    <color name="accent_red">#D32F2F</color>
+    <color name="card_background_red">#FFCDD2</color>
+    <color name="text_primary_red">#B71C1C</color>
+    <color name="text_secondary_red">#E57373</color>
+
+    <!-- Gri Tema -->
+    <color name="background_light_gray">#F5F5F5</color>
+    <color name="accent_gray">#607D8B</color>
+    <color name="card_background_gray">#ECEFF1</color>
+    <color name="text_primary_gray">#37474F</color>
+    <color name="text_secondary_gray">#90A4AE</color>
+
 </resources>
