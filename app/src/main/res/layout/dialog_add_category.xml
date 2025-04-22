@@ -22,7 +22,7 @@
             android:id="@+id/titleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kategori Ekle"
+            android:text="@string/add_category"
             android:textSize="18sp"
             android:textColor="?attr/android:textColorPrimary"
             android:textStyle="bold"
@@ -36,7 +36,7 @@
             android:id="@+id/tilCategoryName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Kategori Adı"
+            android:hint="@string/category_name"
             app:hintTextColor="?attr/android:textColorSecondary"
             app:boxStrokeColor="?attr/colorAccent"
             app:boxBackgroundColor="?attr/cardBackgroundColor"
@@ -55,7 +55,6 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Butonlar -->
         <LinearLayout
             android:id="@+id/buttonContainer"
             android:layout_width="wrap_content"
@@ -71,7 +70,7 @@
                 android:id="@+id/btnSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ekle"
+                android:text="@string/add"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:backgroundTint="?attr/colorAccent"
@@ -86,7 +85,7 @@
                 android:id="@+id/btnCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="İptal"
+                android:text="@string/cancel"
                 android:textColor="@color/white"
                 app:backgroundTint="@color/error_red"
                 app:cornerRadius="8dp"

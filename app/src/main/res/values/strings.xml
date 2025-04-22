@@ -5,11 +5,17 @@
     <string name="categories">Kategoriler</string>
     <string name="search_passwords">Şifre ara</string>
     <string name="add_password">Şifre Ekle</string>
+    <string name="password">Şifre</string>
+    <string name="password_add_edit">Şifre Ekle/Düzenle</string>
     <string name="back">Geri</string>
     <string name="delete_password">Şifreyi sil</string>
     <string name="delete_category">Kategoriyi sil</string>
     <string name="add_category">Kategori Ekle</string>
+    <string name="category_name">Kategori Adı</string>
+    <string name="category">Kategori</string>
+    <string name="title">Başlık</string>
     <string name="save">Kaydet</string>
+    <string name="delete">Sil</string>
     <string name="cancel">İptal</string>
     <string name="add">Ekle</string>
     <string name="language">Dil</string>
@@ -24,5 +30,19 @@
     <string name="red_theme">Kırmızı</string>
     <string name="gray_theme">Gri</string>
     <string name="settings">Ayarlar</string>
+    <string name="username">Kullanıcı Adı</string>
+    <string name="info">Parmak izi okuyucu ile doğrulama yapın</string>
+    <string name="info_sub">Güvenli erişim için kimliğinizi doğrulayın</string>
+    <string name="desc">Parmak izi ikonu</string>
+    <string name="auto_lock">Otomatik Kitlenme Süresi(Saniye)</string>
+    <string name="seconds_20">20</string>
+    <string name="seconds_30">30</string>
+    <string name="seconds_45">45</string>
+    <string name="seconds_60">60</string>
+    <string name="never">Asla</string>
+    <string name="not_work">Bu uygulama, biyometrik doğrulama desteklemeyen cihazlarda çalışmamaktadır. Lütfen cihaz ayarlarından parmak izi veya yüz tanıma ayarlayın.</string>
+
+
+
 
 </resources>

@@ -1,7 +1,10 @@
 package com.example.passwordmanager.presentation.main
 
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -18,6 +21,7 @@ import com.example.passwordmanager.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -26,9 +30,13 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
     private lateinit var navController: NavController
     private var isBackPressedOnce = false
+    private val handler = Handler(Looper.getMainLooper())
+    private var lockRunnable: Runnable? = null
+    private var lastPausedTime: Long = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setupTheme()
+        loadLocale()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -37,12 +45,27 @@ class MainActivity : AppCompatActivity() {
         setupToolbar()
         setupNavigation()
         observeNavigation()
+        setupAutoLock()
+        checkLockOnStart()
     }
 
     private fun setupTheme() {
         val theme = ThemeManager.getCurrentTheme(this)
         Log.d("MainActivity", "Applying theme: $theme")
         setTheme(ThemeManager.getThemeStyle(theme))
+    }
+
+    private fun loadLocale() {
+        val sharedPreferences = getSharedPreferences("settings_prefs", MODE_PRIVATE)
+        val language = sharedPreferences.getString("language", "tr") ?: "tr"
+        Log.d("MainActivity", "Loading language: $language")
+
+        val locale = Locale(language)
+        Locale.setDefault(locale)
+
+        val config = Configuration(resources.configuration)
+        config.setLocale(locale)
+        resources.updateConfiguration(config, resources.displayMetrics)
     }
 
     private fun setupToolbar() {
@@ -69,6 +92,10 @@ class MainActivity : AppCompatActivity() {
                     viewModel.onNavigationSelected(item.itemId)
                     true
                 }
+                R.id.nav_back -> {
+                    handleNav()
+                    true
+                }
                 else -> false
             }
         }
@@ -79,11 +106,21 @@ class MainActivity : AppCompatActivity() {
                 else -> View.VISIBLE
             }
             when (destination.id) {
-                R.id.categoryListFragment -> binding.bottomNavigation.selectedItemId = R.id.nav_categories
-                R.id.passwordListFragment -> binding.bottomNavigation.selectedItemId = R.id.nav_passwords
-                R.id.settingsFragment -> binding.bottomNavigation.selectedItemId = R.id.nav_settings
+                R.id.categoryListFragment -> {
+                    binding.bottomNavigation.selectedItemId = R.id.nav_categories
+                    restartLockTimer()
+                }
+                R.id.passwordListFragment -> {
+                    binding.bottomNavigation.selectedItemId = R.id.nav_passwords
+                    restartLockTimer()
+                }
+                R.id.settingsFragment -> {
+                    binding.bottomNavigation.selectedItemId = R.id.nav_settings
+                    restartLockTimer()
+                }
                 else -> binding.bottomNavigation.selectedItemId = 0
             }
+            Log.d("MainActivity", "Navigated to destination: ${destination.label}")
         }
     }
 
@@ -129,14 +166,133 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupAutoLock() {
+        val sharedPreferences = getSharedPreferences("settings_prefs", MODE_PRIVATE)
+        startLockTimer(sharedPreferences)
+
+        // Otomatik kilit süresinde değişiklik olduğunda zamanlayıcıyı güncelle
+        sharedPreferences.registerOnSharedPreferenceChangeListener { prefs, key ->
+            if (key == "auto_lock_time") {
+                Log.d("MainActivity", "Auto lock time changed, restarting timer")
+                lockRunnable?.let { handler.removeCallbacks(it) }
+                startLockTimer(prefs)
+            }
+        }
+    }
+
+    private fun startLockTimer(sharedPreferences: android.content.SharedPreferences) {
+        val lockTime = sharedPreferences.getInt("auto_lock_time", -1)
+        Log.d("MainActivity", "Starting lock timer with time: $lockTime seconds")
+
+        if (lockTime > 0) {
+            lockRunnable?.let { handler.removeCallbacks(it) } // Eski zamanlayıcıyı iptal et
+            lockRunnable = Runnable {
+                Log.d("MainActivity", "Lock timer expired, navigating to LoginFragment")
+                if (navController.currentDestination?.id != R.id.loginFragment) {
+                    try {
+                        navController.navigate(R.id.action_global_loginFragment)
+                        Log.d("MainActivity", "Navigation to LoginFragment successful")
+                        sharedPreferences.edit().putBoolean("should_lock", false).apply()
+                    } catch (e: Exception) {
+                        Log.e("MainActivity", "Error navigating to LoginFragment: ${e.message}")
+                    }
+                } else {
+                    Log.d("MainActivity", "Already on LoginFragment, skipping navigation")
+                }
+            }
+            Log.d("MainActivity", "Scheduling lock in $lockTime seconds")
+            handler.postDelayed(lockRunnable!!, lockTime * 1000L)
+        } else {
+            Log.d("MainActivity", "Auto lock disabled (time: $lockTime)")
+            lockRunnable?.let { handler.removeCallbacks(it) }
+            lockRunnable = null
+        }
+    }
+
+    private fun restartLockTimer() {
+        val sharedPreferences = getSharedPreferences("settings_prefs", MODE_PRIVATE)
+        Log.d("MainActivity", "Restarting lock timer after navigation")
+        startLockTimer(sharedPreferences)
+    }
+
+    private fun checkLockOnStart() {
+        val sharedPreferences = getSharedPreferences("settings_prefs", MODE_PRIVATE)
+        val shouldLock = sharedPreferences.getBoolean("should_lock", false)
+        Log.d("MainActivity", "Checking lock on start, shouldLock: $shouldLock")
+        if (shouldLock && navController.currentDestination?.id != R.id.loginFragment) {
+            Log.d("MainActivity", "App requires lock, navigating to LoginFragment")
+            try {
+                navController.navigate(R.id.action_global_loginFragment)
+                sharedPreferences.edit().putBoolean("should_lock", false).apply()
+            } catch (e: Exception) {
+                Log.e("MainActivity", "Error navigating to LoginFragment on start: ${e.message}")
+            }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        val sharedPreferences = getSharedPreferences("settings_prefs", MODE_PRIVATE)
+        val lockTime = sharedPreferences.getInt("auto_lock_time", -1)
+        if (lockTime > 0) {
+            Log.d("MainActivity", "App paused, marking as requiring lock, recording pause time")
+            lastPausedTime = System.currentTimeMillis()
+            sharedPreferences.edit().putBoolean("should_lock", true).apply()
+        } else {
+            Log.d("MainActivity", "App paused, auto lock disabled, no action taken")
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val sharedPreferences = getSharedPreferences("settings_prefs", MODE_PRIVATE)
+        val lockTime = sharedPreferences.getInt("auto_lock_time", -1)
+        Log.d("MainActivity", "App resumed, checking background lock status")
+
+        if (lockTime > 0 && lastPausedTime > 0) {
+            val timeInBackground = System.currentTimeMillis() - lastPausedTime
+            Log.d("MainActivity", "Time in background: ${timeInBackground / 1000} seconds")
+            if (timeInBackground >= lockTime * 1000L) {
+                Log.d("MainActivity", "Lock time exceeded in background, navigating to LoginFragment")
+                if (navController.currentDestination?.id != R.id.loginFragment) {
+                    try {
+                        navController.navigate(R.id.action_global_loginFragment)
+                        sharedPreferences.edit().putBoolean("should_lock", false).apply()
+                        Log.d("MainActivity", "Navigation to LoginFragment successful")
+                    } catch (e: Exception) {
+                        Log.e("MainActivity", "Error navigating to LoginFragment: ${e.message}")
+                    }
+                }
+                lastPausedTime = 0L
+                return // Zamanlayıcıyı tekrar başlatmaya gerek yok, kilit ekranına gidildi
+            }
+        }
+
+        Log.d("MainActivity", "App resumed, restarting lock timer")
+        startLockTimer(sharedPreferences)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("MainActivity", "App destroyed, cleaning up lock runnable")
+        lockRunnable?.let {
+            handler.removeCallbacks(it)
+            lockRunnable = null
+        }
+    }
+
     override fun onBackPressed() {
+        handleNav()
+        super.onBackPressed()
+    }
+
+    private fun handleNav(){
         val currentDestination = navController.currentDestination?.id
         when (currentDestination) {
             R.id.loginFragment -> finish()
             R.id.categoryListFragment -> {
                 if (navController.previousBackStackEntry == null) {
                     if (!isBackPressedOnce) {
-                        Toast.makeText(this, "Çıkmak için tekrar basın", Toast.LENGTH_SHORT).show()
                         isBackPressedOnce = true
                         lifecycleScope.launch {
                             delay(2000)
@@ -158,5 +314,6 @@ class MainActivity : AppCompatActivity() {
             }
             else -> super.onBackPressed()
         }
+
     }
 }

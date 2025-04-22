@@ -5,7 +5,7 @@ import androidx.core.content.ContextCompat
 import com.example.passwordmanager.R
 
 object ThemeManager {
-    // Tema türleri
+
     const val THEME_BLUE = "blue"
     const val THEME_GREEN = "green"
     const val THEME_PURPLE = "purple"

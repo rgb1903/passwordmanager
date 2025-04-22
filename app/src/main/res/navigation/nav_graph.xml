@@ -88,4 +88,12 @@
         android:id="@+id/settingsFragment"
         android:name="com.example.passwordmanager.presentation.settings.SettingsFragment"
         android:label="Ayarlar" />
+
+    <!-- Global Eylem: Herhangi bir fragment'ten LoginFragment'a yönlendirme -->
+    <action
+        android:id="@+id/action_global_loginFragment"
+        app:destination="@id/loginFragment"
+        app:popUpTo="@id/loginFragment"
+        app:popUpToInclusive="true"/>
+
 </navigation>

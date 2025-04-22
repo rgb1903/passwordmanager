@@ -28,12 +28,11 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <!-- Kategori Adı -->
         <TextView
             android:id="@+id/tvCategoryName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Kategori Adı"
+            android:text="@string/category_name"
             android:textSize="16sp"
             android:textColor="?attr/android:textColorPrimary"
             android:textStyle="bold"
@@ -45,7 +44,6 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="8dp"/>
 
-        <!-- Silme İkonu (İsteğe Bağlı) -->
         <ImageView
             android:id="@+id/ivDelete"
             android:layout_width="24dp"

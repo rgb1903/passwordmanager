@@ -34,6 +34,7 @@ class SettingsFragment : Fragment() {
 
         setupLanguageOptions()
         setupThemeOptions()
+        setupAutoLockOptions()
         applyThemeUI()
     }
 
@@ -89,6 +90,34 @@ class SettingsFragment : Fragment() {
         }
     }
 
+    private fun setupAutoLockOptions() {
+        val currentAutoLock = sharedPreferences.getInt("auto_lock_time", -1) // -1: Asla
+        Log.d("SettingsFragment", "Current auto lock time: $currentAutoLock")
+
+        updateAutoLockSelection(currentAutoLock)
+
+        binding.option20Seconds.setOnClickListener {
+            Log.d("SettingsFragment", "Selected auto lock: 20 seconds")
+            changeAutoLock(20)
+        }
+        binding.option30Seconds.setOnClickListener {
+            Log.d("SettingsFragment", "Selected auto lock: 30 seconds")
+            changeAutoLock(30)
+        }
+        binding.option45Seconds.setOnClickListener {
+            Log.d("SettingsFragment", "Selected auto lock: 45 seconds")
+            changeAutoLock(45)
+        }
+        binding.option60Seconds.setOnClickListener {
+            Log.d("SettingsFragment", "Selected auto lock: 60 seconds")
+            changeAutoLock(60)
+        }
+        binding.optionNever.setOnClickListener {
+            Log.d("SettingsFragment", "Selected auto lock: Never")
+            changeAutoLock(-1)
+        }
+    }
+
     private fun updateLanguageSelection(languageCode: String) {
         binding.checkTurkish.visibility = View.GONE
         binding.checkEnglish.visibility = View.GONE
@@ -116,6 +145,22 @@ class SettingsFragment : Fragment() {
             "purple" -> binding.checkPurpleTheme.visibility = View.VISIBLE
             "red" -> binding.checkRedTheme.visibility = View.VISIBLE
             "gray" -> binding.checkGrayTheme.visibility = View.VISIBLE
+        }
+    }
+
+    private fun updateAutoLockSelection(lockTime: Int) {
+        binding.check20Seconds.visibility = View.GONE
+        binding.check30Seconds.visibility = View.GONE
+        binding.check45Seconds.visibility = View.GONE
+        binding.check60Seconds.visibility = View.GONE
+        binding.checkNever.visibility = View.GONE
+
+        when (lockTime) {
+            20 -> binding.check20Seconds.visibility = View.VISIBLE
+            30 -> binding.check30Seconds.visibility = View.VISIBLE
+            45 -> binding.check45Seconds.visibility = View.VISIBLE
+            60 -> binding.check60Seconds.visibility = View.VISIBLE
+            -1 -> binding.checkNever.visibility = View.VISIBLE
         }
     }
 
@@ -160,7 +205,6 @@ class SettingsFragment : Fragment() {
                 R.color.text_secondary_gray,
                 R.color.accent_gray
             )
-
             else -> listOf(
                 R.color.card_background_blue,
                 R.color.text_primary_blue,
@@ -172,10 +216,12 @@ class SettingsFragment : Fragment() {
         // Kart arka planları
         binding.cardLanguage.setCardBackgroundColor(ContextCompat.getColor(requireContext(), cardBackgroundColor))
         binding.cardTheme.setCardBackgroundColor(ContextCompat.getColor(requireContext(), cardBackgroundColor))
+        binding.cardAutoLock.setCardBackgroundColor(ContextCompat.getColor(requireContext(), cardBackgroundColor))
 
         // Metin renkleri
         binding.tvLanguageTitle.setTextColor(ContextCompat.getColor(requireContext(), textPrimaryColor))
         binding.tvThemeTitle.setTextColor(ContextCompat.getColor(requireContext(), textPrimaryColor))
+        binding.tvAutoLockTitle.setTextColor(ContextCompat.getColor(requireContext(), textPrimaryColor))
         binding.tvTurkish.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
         binding.tvEnglish.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
         binding.tvGerman.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
@@ -185,7 +231,11 @@ class SettingsFragment : Fragment() {
         binding.tvOrangeTheme.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
         binding.tvRedTheme.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
         binding.tvGrayTheme.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
-
+        binding.tv20Seconds.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
+        binding.tv30Seconds.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
+        binding.tv45Seconds.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
+        binding.tv60Seconds.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
+        binding.tvNever.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
 
         // Tik ikonları
         binding.checkTurkish.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
@@ -197,7 +247,11 @@ class SettingsFragment : Fragment() {
         binding.checkOrangeTheme.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
         binding.checkRedTheme.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
         binding.checkGrayTheme.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
-
+        binding.check20Seconds.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
+        binding.check30Seconds.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
+        binding.check45Seconds.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
+        binding.check60Seconds.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
+        binding.checkNever.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
     }
 
     private fun changeLanguage(languageCode: String) {
@@ -223,6 +277,14 @@ class SettingsFragment : Fragment() {
         updateThemeSelection(theme)
         applyThemeUI()
         requireActivity().recreate()
+    }
+
+    private fun changeAutoLock(lockTime: Int) {
+        Log.d("SettingsFragment", "Changing auto lock to: $lockTime")
+        val saved = sharedPreferences.edit().putInt("auto_lock_time", lockTime).commit()
+        Log.d("SettingsFragment", "Auto lock saved to SharedPreferences: $lockTime, Success: $saved")
+
+        updateAutoLockSelection(lockTime)
     }
 
     override fun onDestroyView() {

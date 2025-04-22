@@ -16,6 +16,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
+    private val notWork = R.string.not_work
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,10 +40,9 @@ class LoginFragment : Fragment() {
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
                 Toast.makeText(
                     requireContext(),
-                    "Bu uygulama, biyometrik doğrulama desteklemeyen cihazlarda çalışmamaktadır. Lütfen cihaz ayarlarından parmak izi veya yüz tanıma ayarlayın.",
+                    notWork,
                     Toast.LENGTH_LONG
                 ).show()
-                // 2 saniye gecikme ile uygulamayı kapat
                 lifecycleScope.launch {
                     delay(2000)
                     requireActivity().finish()
@@ -54,7 +54,6 @@ class LoginFragment : Fragment() {
                     "Biyometrik doğrulama yapılamıyor. Bu uygulama bu cihazda çalışmamaktadır.",
                     Toast.LENGTH_LONG
                 ).show()
-                // 2 saniye gecikme ile uygulamayı kapat
                 lifecycleScope.launch {
                     delay(2000)
                     requireActivity().finish()
@@ -67,13 +66,11 @@ class LoginFragment : Fragment() {
         val executor = ContextCompat.getMainExecutor(requireContext())
         val biometricPrompt = BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                // Başarılı doğrulama, CategoryListFragment'a yönlendir
                 findNavController().navigate(R.id.action_loginFragment_to_categoryListFragment)
             }
 
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                 Toast.makeText(requireContext(), "Doğrulama hatası: $errString", Toast.LENGTH_SHORT).show()
-                // Hata durumunda uygulamayı kapat
                 requireActivity().finish()
             }
 

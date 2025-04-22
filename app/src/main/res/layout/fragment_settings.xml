@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_light_blue"
+    android:background="?attr/android:background"
     android:padding="16dp">
 
     <!-- Dil Seçenekleri Kartı -->
@@ -12,7 +12,7 @@
         android:id="@+id/cardLanguage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/card_background"
+        app:cardBackgroundColor="?attr/cardBackgroundColor"
         app:cardCornerRadius="12dp"
         app:cardElevation="4dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/language"
                 android:textSize="18sp"
-                android:textColor="@color/text_primary"
+                android:textColor="?attr/android:textColorPrimary"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-medium"
                 android:layout_marginBottom="12dp"/>
@@ -78,7 +78,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/turkish"
                             android:textSize="14sp"
-                            android:textColor="@color/text_primary"/>
+                            android:textColor="?attr/android:textColorPrimary"/>
                     </LinearLayout>
 
                     <ImageView
@@ -121,7 +121,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/english"
                             android:textSize="14sp"
-                            android:textColor="@color/text_primary"/>
+                            android:textColor="?attr/android:textColorPrimary"/>
                     </LinearLayout>
 
                     <ImageView
@@ -164,7 +164,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/german"
                             android:textSize="14sp"
-                            android:textColor="@color/text_primary"/>
+                            android:textColor="?attr/android:textColorPrimary"/>
                     </LinearLayout>
 
                     <ImageView
@@ -184,7 +184,7 @@
         android:id="@+id/cardTheme"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/card_background"
+        app:cardBackgroundColor="?attr/cardBackgroundColor"
         app:cardCornerRadius="12dp"
         app:cardElevation="4dp"
         app:layout_constraintTop_toBottomOf="@id/cardLanguage"
@@ -206,7 +206,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/theme"
                 android:textSize="18sp"
-                android:textColor="@color/text_primary"
+                android:textColor="?attr/android:textColorPrimary"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-medium"
                 android:layout_marginBottom="12dp"/>
@@ -232,7 +232,6 @@
                     android:focusable="true"
                     android:background="?android:attr/selectableItemBackground">
 
-                    <!-- Mavi Tema -->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -243,15 +242,15 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@drawable/ic_circle_blue"
-                            android:layout_marginBottom="8dp" />
+                            android:layout_marginBottom="8dp"/>
 
                         <TextView
                             android:id="@+id/tvBlueTheme"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Mavi"
+                            android:text="@string/blue_theme"
                             android:textSize="14sp"
-                            android:textColor="@color/text_primary"/>
+                            android:textColor="?attr/android:textColorPrimary"/>
                     </LinearLayout>
 
                     <ImageView
@@ -262,7 +261,6 @@
                         android:src="@drawable/ic_check"
                         android:visibility="gone"/>
                 </LinearLayout>
-
 
                 <!-- Kırmızı Tema -->
                 <LinearLayout
@@ -287,7 +285,7 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@drawable/ic_circle_red"
-                            android:layout_marginBottom="8dp" />
+                            android:layout_marginBottom="8dp"/>
 
                         <TextView
                             android:id="@+id/tvRedTheme"
@@ -295,7 +293,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/red_theme"
                             android:textSize="14sp"
-                            android:textColor="@color/text_primary"/>
+                            android:textColor="?attr/android:textColorPrimary"/>
                     </LinearLayout>
 
                     <ImageView
@@ -312,7 +310,7 @@
                     android:id="@+id/optionGreenTheme"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_weight="4"
                     android:orientation="vertical"
                     android:padding="8dp"
                     android:gravity="center"
@@ -338,7 +336,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/green_theme"
                             android:textSize="14sp"
-                            android:textColor="@color/text_primary"/>
+                            android:textColor="?attr/android:textColorPrimary"/>
                     </LinearLayout>
 
                     <ImageView
@@ -379,9 +377,9 @@
                             android:id="@+id/tvOrangeTheme"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text= "@string/orange_theme"
+                            android:text="@string/orange_theme"
                             android:textSize="13sp"
-                            android:textColor="@color/text_primary"/>
+                            android:textColor="?attr/android:textColorPrimary"/>
                     </LinearLayout>
 
                     <ImageView
@@ -416,7 +414,7 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:src="@drawable/ic_circle_gray"
-                            android:layout_marginBottom="8dp" />
+                            android:layout_marginBottom="8dp"/>
 
                         <TextView
                             android:id="@+id/tvGrayTheme"
@@ -424,7 +422,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/gray_theme"
                             android:textSize="14sp"
-                            android:textColor="@color/text_primary"/>
+                            android:textColor="?attr/android:textColorPrimary"/>
                     </LinearLayout>
 
                     <ImageView
@@ -436,15 +434,12 @@
                         android:visibility="gone"/>
                 </LinearLayout>
 
-
-
-
                 <!-- Mor Tema -->
                 <LinearLayout
                     android:id="@+id/optionPurpleTheme"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_weight="4"
                     android:orientation="vertical"
                     android:padding="8dp"
                     android:gravity="center"
@@ -470,7 +465,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/purple_theme"
                             android:textSize="14sp"
-                            android:textColor="@color/text_primary"/>
+                            android:textColor="?attr/android:textColorPrimary"/>
                     </LinearLayout>
 
                     <ImageView
@@ -480,6 +475,274 @@
                         android:layout_marginTop="4dp"
                         android:src="@drawable/ic_check"
                         android:visibility="gone"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Otomatik Kilit Kartı  -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardAutoLock"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="?attr/cardBackgroundColor"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        app:layout_constraintTop_toBottomOf="@id/cardTheme"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Otomatik Kilit Başlığı -->
+            <TextView
+                android:id="@+id/tvAutoLockTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/auto_lock"
+                android:textSize="18sp"
+                android:textColor="?attr/android:textColorPrimary"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
+                android:layout_marginBottom="12dp"/>
+
+            <!-- Otomatik Kilit Seçenekleri (Yan Yana) -->
+            <LinearLayout
+                android:id="@+id/autoLockOptions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <!-- 20 Saniye -->
+                <LinearLayout
+                    android:id="@+id/option20Seconds"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:orientation="vertical"
+                    android:padding="4dp"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_clock"
+                            android:layout_marginEnd="8dp"
+                            app:tint="?attr/colorAccent"/>
+
+                        <TextView
+                            android:id="@+id/tv20Seconds"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/seconds_20"
+                            android:textSize="14sp"
+                            android:textColor="?attr/android:textColorPrimary"/>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/check20Seconds"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/ic_check"
+                        android:visibility="gone"
+                        app:tint="?attr/colorAccent"/>
+                </LinearLayout>
+
+                <!-- 30 Saniye -->
+                <LinearLayout
+                    android:id="@+id/option30Seconds"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:orientation="vertical"
+                    android:padding="4dp"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_clock"
+                            android:layout_marginEnd="8dp"
+                            app:tint="?attr/colorAccent"/>
+
+                        <TextView
+                            android:id="@+id/tv30Seconds"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/seconds_30"
+                            android:textSize="14sp"
+                            android:textColor="?attr/android:textColorPrimary"/>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/check30Seconds"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/ic_check"
+                        android:visibility="gone"
+                        app:tint="?attr/colorAccent"/>
+                </LinearLayout>
+
+                <!-- 45 Saniye -->
+                <LinearLayout
+                    android:id="@+id/option45Seconds"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:orientation="vertical"
+                    android:padding="4dp"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_clock"
+                            android:layout_marginEnd="8dp"
+                            app:tint="?attr/colorAccent"/>
+
+                        <TextView
+                            android:id="@+id/tv45Seconds"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/seconds_45"
+                            android:textSize="14sp"
+                            android:textColor="?attr/android:textColorPrimary"/>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/check45Seconds"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/ic_check"
+                        android:visibility="gone"
+                        app:tint="?attr/colorAccent"/>
+                </LinearLayout>
+
+                <!-- 60 Saniye -->
+                <LinearLayout
+                    android:id="@+id/option60Seconds"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:orientation="vertical"
+                    android:padding="4dp"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_clock"
+                            android:layout_marginEnd="8dp"
+                            app:tint="?attr/colorAccent"/>
+
+                        <TextView
+                            android:id="@+id/tv60Seconds"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/seconds_60"
+                            android:textSize="14sp"
+                            android:textColor="?attr/android:textColorPrimary"/>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/check60Seconds"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/ic_check"
+                        android:visibility="gone"
+                        app:tint="?attr/colorAccent"/>
+                </LinearLayout>
+
+                <!-- Asla -->
+                <LinearLayout
+                    android:id="@+id/optionNever"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:orientation="vertical"
+                    android:padding="4dp"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_clock"
+                            android:layout_marginEnd="8dp"
+                            app:tint="?attr/colorAccent"/>
+
+                        <TextView
+                            android:id="@+id/tvNever"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/never"
+                            android:textSize="14sp"
+                            android:textColor="?attr/android:textColorPrimary"/>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/checkNever"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/ic_check"
+                        android:visibility="gone"
+                        app:tint="?attr/colorAccent"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

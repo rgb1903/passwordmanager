@@ -7,13 +7,12 @@
     android:background="?attr/android:background"
     android:padding="24dp">
 
-    <!-- Parmak İzi İkonu -->
     <ImageView
         android:id="@+id/fingerprintIcon"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:src="@drawable/ic_fingerprint"
-        android:contentDescription="Parmak izi ikonu"
+        android:contentDescription="@string/desc"
         app:tint="?attr/colorAccent"
         app:layout_constraintBottom_toTopOf="@id/authText"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,12 +21,11 @@
         android:alpha="0.8"
         android:animateLayoutChanges="true"/>
 
-    <!-- Doğrulama Metni -->
     <TextView
         android:id="@+id/authText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Parmak izi okuyucu ile doğrulama yapın"
+        android:text="@string/info"
         android:textSize="20sp"
         android:textColor="?attr/android:textColorPrimary"
         android:textStyle="bold"
@@ -39,12 +37,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Alt Bilgi Metni -->
     <TextView
         android:id="@+id/subText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Güvenli erişim için kimliğinizi doğrulayın"
+        android:text="@string/info_sub"
         android:textSize="14sp"
         android:textColor="?attr/android:textColorSecondary"
         android:textAlignment="center"
