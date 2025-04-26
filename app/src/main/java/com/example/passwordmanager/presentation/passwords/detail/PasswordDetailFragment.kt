@@ -1,8 +1,6 @@
 package com.example.passwordmanager.presentation.password.detail
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,11 +14,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.passwordmanager.R
 import com.example.passwordmanager.common.utils.EncryptionHelper
+import com.example.passwordmanager.common.utils.Extensions.ToastUtils.showCustomToast
+import com.example.passwordmanager.common.utils.Extensions.ClipboardUtils.copyToClipboard
 import com.example.passwordmanager.databinding.FragmentPasswordDetailBinding
-import com.example.passwordmanager.domain.model.Category
 import com.example.passwordmanager.domain.model.Password
-import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -62,14 +61,14 @@ class PasswordDetailFragment : Fragment() {
         biometricPrompt = BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                 super.onAuthenticationError(errorCode, errString)
-                Toast.makeText(requireContext(), "Authentication error: $errString", Toast.LENGTH_SHORT).show()
+
+                showCustomToast(requireContext(),errString.toString())
             }
 
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 super.onAuthenticationSucceeded(result)
                 when (result.authenticationType) {
                     BiometricPrompt.AUTHENTICATION_RESULT_TYPE_BIOMETRIC -> {
-                        // Parmak izi doğrulama başarılı
                         handleBiometricSuccess()
                     }
                 }
@@ -77,14 +76,17 @@ class PasswordDetailFragment : Fragment() {
 
             override fun onAuthenticationFailed() {
                 super.onAuthenticationFailed()
-                Toast.makeText(requireContext(), "Authentication failed", Toast.LENGTH_SHORT).show()
+                val fail = getString(R.string.auth_fail)
+                showCustomToast(requireContext(), fail)
             }
         })
 
+        val cancel = getString(R.string.cancel)
+        val verify = getString(R.string.verify)
         promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("Biometric Authentication")
-            .setSubtitle("Verify your identity to access sensitive data")
-            .setNegativeButtonText("Cancel")
+            .setTitle(verify)
+            .setSubtitle("")
+            .setNegativeButtonText(cancel)
             .build()
     }
 
@@ -138,9 +140,10 @@ class PasswordDetailFragment : Fragment() {
             val username = binding.etUsername.text.toString().trim()
             val passwordText = binding.etPassword.text.toString().trim()
             val category = viewModel.selectedCategory.value
+            val fill = getString(R.string.fill_all)
 
             if (title.isEmpty() || username.isEmpty() || passwordText.isEmpty() || category == null) {
-                Toast.makeText(context, "Please fill all fields and select a category", Toast.LENGTH_SHORT).show()
+                showCustomToast(requireContext(),fill)
                 return@setOnClickListener
             }
 
@@ -174,48 +177,40 @@ class PasswordDetailFragment : Fragment() {
     }
 
     private fun setupCopyAndVisibility() {
-        // Kullanıcı adı kopyalama
+
         binding.tilUsername.setEndIconOnClickListener {
-            biometricAction = {
-                val username = binding.etUsername.text.toString().trim()
-                if (username.isNotEmpty()) {
-                    copyToClipboard("Username", username)
-                    Toast.makeText(requireContext(), "Username copied to clipboard", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(requireContext(), "Username is empty", Toast.LENGTH_SHORT).show()
-                }
+            val textName= getString(R.string.name_copy)
+            val textEmpty = getString(R.string.name_empty)
+            val username = binding.etUsername.text.toString().trim()
+            if (username.isNotEmpty()) {
+                copyToClipboard(requireContext())
+                showCustomToast(requireContext(),"$textName: $username")
+
+            } else {
+                showCustomToast(requireContext(),textEmpty)
             }
-            biometricPrompt.authenticate(promptInfo)
         }
 
-        // Şifre kopyalama
         binding.tilPassword.setEndIconOnClickListener {
+            val textPass = getString(R.string.pass_copy)
+            val textEmpty = getString(R.string.pass_empty)
+            val password = binding.etPassword.text.toString().trim()
+
             biometricAction = {
-                val password = binding.etPassword.text.toString().trim()
                 if (password.isNotEmpty()) {
-                    copyToClipboard("Password", password)
-                    Toast.makeText(requireContext(), "Password copied to clipboard", Toast.LENGTH_SHORT).show()
+                    copyToClipboard(requireContext())
+                    showCustomToast(requireContext(),"$textPass: $password")
                 } else {
-                    Toast.makeText(requireContext(), "Password is empty", Toast.LENGTH_SHORT).show()
+                    showCustomToast(requireContext(),textEmpty)
                 }
             }
             biometricPrompt.authenticate(promptInfo)
         }
 
-        // Şifre göster/gizle için parmak izi doğrulaması
-        binding.tilPassword.setEndIconOnClickListener { // Varsayılan password toggle'ı devre dışı bırakıp özelleştiriyoruz
-            biometricAction = {
-                binding.tilPassword.isPasswordVisibilityToggleEnabled = !binding.tilPassword.isPasswordVisibilityToggleEnabled
-            }
-            biometricPrompt.authenticate(promptInfo)
-        }
+
     }
 
-    private fun copyToClipboard(label: String, text: String) {
-        val clipboard = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = ClipData.newPlainText(label, text)
-        clipboard.setPrimaryClip(clip)
-    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

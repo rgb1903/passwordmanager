@@ -47,7 +47,7 @@ class PasswordListFragment : Fragment() {
         setupRecyclerView(categoryId)
         setupAddPasswordButton(categoryId)
         observeState()
-        viewModel.loadPasswords(categoryId) // Şifreleri categoryId'ye göre yükle
+        viewModel.loadPasswords(categoryId)
     }
 
     private fun setupRecyclerView(categoryId: Long) {
@@ -70,28 +70,23 @@ class PasswordListFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.state.collect { state ->
-                    // Şifreleri RecyclerView'a yükle
                     passwordAdapter.submitList(state.passwords)
 
-                    // Yükleme durumu
                     binding.rvPasswords.visibility = if (state.isLoading) View.GONE else View.VISIBLE
 
-                    // Hata mesajı
                     state.error?.let { error ->
                         Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
-                        viewModel.state.value.copy(error = null) // Hata mesajını sıfırla
+                        viewModel.state.value.copy(error = null)
                     }
 
-                    // Başarı mesajı
                     state.message?.let { message ->
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-                        viewModel.state.value.copy(message = null) // Mesajı sıfırla
+                        viewModel.state.value.copy(message = null)
                     }
                 }
             }
         }
     }
-
     private fun navigateToPasswordDetail(password: Password?, categoryId: Long) {
         val action = PasswordListFragmentDirections.actionPasswordListToDetail(
             password = password,
@@ -99,7 +94,6 @@ class PasswordListFragment : Fragment() {
         )
         findNavController().navigate(action)
     }
-
     private fun setupAddPasswordButton(categoryId: Long) {
         binding.fabAddPassword.setOnClickListener {
             val action = PasswordListFragmentDirections.actionPasswordListToAddPassword(
@@ -109,7 +103,6 @@ class PasswordListFragment : Fragment() {
             findNavController().navigate(action)
         }
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

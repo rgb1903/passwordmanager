@@ -1,48 +1,77 @@
 <!-- res/values/strings.xml -->
 <resources>
+    <!-- Uygulama -->
     <string name="app_name">Password Manager</string>
+
+    <!-- Şifreler -->
     <string name="passwords">Şifreler</string>
-    <string name="categories">Kategoriler</string>
     <string name="search_passwords">Şifre ara</string>
     <string name="add_password">Şifre Ekle</string>
     <string name="password">Şifre</string>
     <string name="password_add_edit">Şifre Ekle/Düzenle</string>
-    <string name="back">Geri</string>
     <string name="delete_password">Şifreyi sil</string>
-    <string name="delete_category">Kategoriyi sil</string>
+    <string name="pass_copy">Şifre Kopyalandı</string>
+    <string name="pass_empty">Henüz bir şifre belirlemediniz!</string>
+
+    <!-- Kullanıcı adı -->
+    <string name="username">Kullanıcı Adı</string>
+    <string name="name_copy">Kullanıcı Adı Kopyalandı</string>
+    <string name="name_empty">Henüz bir kullanıcı adı belirlemediniz!</string>
+
+    <!-- Kategori -->
+    <string name="categories">Kategoriler</string>
     <string name="add_category">Kategori Ekle</string>
+    <string name="delete_category">Kategoriyi sil</string>
     <string name="category_name">Kategori Adı</string>
     <string name="category">Kategori</string>
+
+    <!-- Genel UI -->
     <string name="title">Başlık</string>
+    <string name="back">Geri</string>
     <string name="save">Kaydet</string>
     <string name="delete">Sil</string>
     <string name="cancel">İptal</string>
     <string name="add">Ekle</string>
+    <string name="copy">Kopyala</string>
+    <string name="dropdown_arrow">Dropdown</string>
+    <string name="fill_all">Lütfen tüm alanları doldurun ve bir kategori seçin</string>
+
+    <!-- Ayarlar -->
+    <string name="settings">Ayarlar</string>
     <string name="language">Dil</string>
     <string name="theme">Tema</string>
+
+    <!-- Diller -->
     <string name="turkish">Türkçe</string>
     <string name="english">İngilizce</string>
     <string name="german">Almanca</string>
+
+    <!-- Temalar -->
     <string name="blue_theme">Mavi</string>
     <string name="green_theme">Yeşil</string>
     <string name="purple_theme">Mor</string>
     <string name="orange_theme">Turuncu</string>
     <string name="red_theme">Kırmızı</string>
     <string name="gray_theme">Gri</string>
-    <string name="settings">Ayarlar</string>
-    <string name="username">Kullanıcı Adı</string>
+
+    <!-- Biyometrik doğrulama -->
+    <string name="verify">Biyometrik Doğrulama</string>
+    <string name="verify_info">Hassas verilere erişmek için kimliğinizi doğrulayın</string>
+    <string name="finger_print">Giriş yapmak için parmak izinizi kullanın!</string>
+    <string name="prompt_text">Kimliğinizi doğrulamak için parmak izinizi kullanın.</string>
+    <string name="unsuccess">Biyometrik doğrulama başarısız!</string>
+    <string name="auth_fail">Doğrulama başarısız!</string>
     <string name="info">Parmak izi okuyucu ile doğrulama yapın</string>
     <string name="info_sub">Güvenli erişim için kimliğinizi doğrulayın</string>
     <string name="desc">Parmak izi ikonu</string>
+    <string name="not_work">Bu uygulama, biyometrik doğrulama desteklemeyen cihazlarda çalışmamaktadır. Lütfen cihaz ayarlarından parmak izi veya yüz tanıma ayarlayın.</string>
+    <string name="not_verify">Biyometrik doğrulama yapılamıyor. Bu uygulama bu cihazda çalışmamaktadır</string>
+
+    <!-- Otomatik kilitlenme -->
     <string name="auto_lock">Otomatik Kitlenme Süresi(Saniye)</string>
     <string name="seconds_20">20</string>
     <string name="seconds_30">30</string>
     <string name="seconds_45">45</string>
     <string name="seconds_60">60</string>
     <string name="never">Asla</string>
-    <string name="not_work">Bu uygulama, biyometrik doğrulama desteklemeyen cihazlarda çalışmamaktadır. Lütfen cihaz ayarlarından parmak izi veya yüz tanıma ayarlayın.</string>
-
-
-
-
 </resources>

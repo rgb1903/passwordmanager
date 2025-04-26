@@ -7,7 +7,6 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.viewModels
 import androidx.core.view.WindowCompat
@@ -16,6 +15,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.passwordmanager.R
+import com.example.passwordmanager.common.utils.Extensions
 import com.example.passwordmanager.common.utils.ThemeManager
 import com.example.passwordmanager.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,26 +33,35 @@ class MainActivity : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
     private var lockRunnable: Runnable? = null
     private var lastPausedTime: Long = 0L
+    private var isThemeChanged = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setupTheme()
-        loadLocale()
+
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupTheme()
+        Extensions.LocaleUtils.updateLocale(this)
+
         setupStatusBar()
-        setupToolbar()
         setupNavigation()
         observeNavigation()
         setupAutoLock()
+
         checkLockOnStart()
+
+
     }
+
+
 
     private fun setupTheme() {
         val theme = ThemeManager.getCurrentTheme(this)
         Log.d("MainActivity", "Applying theme: $theme")
         setTheme(ThemeManager.getThemeStyle(theme))
+        isThemeChanged = true
     }
 
     private fun loadLocale() {
@@ -68,9 +77,7 @@ class MainActivity : AppCompatActivity() {
         resources.updateConfiguration(config, resources.displayMetrics)
     }
 
-    private fun setupToolbar() {
-        setSupportActionBar(binding.toolbar)
-    }
+
 
     private fun setupNavigation() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -170,7 +177,6 @@ class MainActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("settings_prefs", MODE_PRIVATE)
         startLockTimer(sharedPreferences)
 
-        // Otomatik kilit süresinde değişiklik olduğunda zamanlayıcıyı güncelle
         sharedPreferences.registerOnSharedPreferenceChangeListener { prefs, key ->
             if (key == "auto_lock_time") {
                 Log.d("MainActivity", "Auto lock time changed, restarting timer")
@@ -185,7 +191,7 @@ class MainActivity : AppCompatActivity() {
         Log.d("MainActivity", "Starting lock timer with time: $lockTime seconds")
 
         if (lockTime > 0) {
-            lockRunnable?.let { handler.removeCallbacks(it) } // Eski zamanlayıcıyı iptal et
+            lockRunnable?.let { handler.removeCallbacks(it) }
             lockRunnable = Runnable {
                 Log.d("MainActivity", "Lock timer expired, navigating to LoginFragment")
                 if (navController.currentDestination?.id != R.id.loginFragment) {
@@ -216,9 +222,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkLockOnStart() {
+        if (isThemeChanged) {
+            isThemeChanged = false
+            return
+        }
+
         val sharedPreferences = getSharedPreferences("settings_prefs", MODE_PRIVATE)
         val shouldLock = sharedPreferences.getBoolean("should_lock", false)
         Log.d("MainActivity", "Checking lock on start, shouldLock: $shouldLock")
+
         if (shouldLock && navController.currentDestination?.id != R.id.loginFragment) {
             Log.d("MainActivity", "App requires lock, navigating to LoginFragment")
             try {
@@ -229,7 +241,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
     override fun onPause() {
         super.onPause()
         val sharedPreferences = getSharedPreferences("settings_prefs", MODE_PRIVATE)

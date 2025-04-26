@@ -4,8 +4,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/android:background"
-    android:padding="16dp">
+    android:background="?attr/background">
+
+    <!-- Guideline for horizontal margins -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
 
     <!-- Dil Seçenekleri Kartı -->
     <com.google.android.material.card.MaterialCardView
@@ -16,167 +30,184 @@
         app:cardCornerRadius="12dp"
         app:cardElevation="4dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginTop="8dp">
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        android:layout_marginTop="32dp">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="12dp">
 
             <!-- Dil Başlığı -->
-            <TextView
-                android:id="@+id/tvLanguageTitle"
+            <LinearLayout
+                android:id="@+id/languageTitleContainer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/language"
-                android:textSize="18sp"
-                android:textColor="?attr/android:textColorPrimary"
-                android:textStyle="bold"
-                android:fontFamily="sans-serif-medium"
-                android:layout_marginBottom="12dp"/>
-
-            <!-- Dil Seçenekleri (Yan Yana) -->
-            <LinearLayout
-                android:id="@+id/languageOptions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center">
+                android:gravity="center_vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginBottom="12dp">
 
-                <!-- Türkçe -->
-                <LinearLayout
-                    android:id="@+id/optionTurkish"
-                    android:layout_width="0dp"
+                <ImageView
+                    android:id="@+id/iconLanguageTitle"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_language"
+                    android:layout_marginEnd="8dp"
+                    app:tint="?attr/colorAccent"/>
+
+                <TextView
+                    android:id="@+id/tvLanguageTitle"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:padding="8dp"
-                    android:gravity="center"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="?android:attr/selectableItemBackground">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_flag_tr"
-                            android:layout_marginEnd="8dp"/>
-
-                        <TextView
-                            android:id="@+id/tvTurkish"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/turkish"
-                            android:textSize="14sp"
-                            android:textColor="?attr/android:textColorPrimary"/>
-                    </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/checkTurkish"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginTop="4dp"
-                        android:src="@drawable/ic_check"
-                        android:visibility="gone"/>
-                </LinearLayout>
-
-                <!-- İngilizce -->
-                <LinearLayout
-                    android:id="@+id/optionEnglish"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:padding="8dp"
-                    android:gravity="center"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="?android:attr/selectableItemBackground">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_flag_en"
-                            android:layout_marginEnd="8dp"/>
-
-                        <TextView
-                            android:id="@+id/tvEnglish"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/english"
-                            android:textSize="14sp"
-                            android:textColor="?attr/android:textColorPrimary"/>
-                    </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/checkEnglish"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginTop="4dp"
-                        android:src="@drawable/ic_check"
-                        android:visibility="gone"/>
-                </LinearLayout>
-
-                <!-- Almanca -->
-                <LinearLayout
-                    android:id="@+id/optionGerman"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:padding="8dp"
-                    android:gravity="center"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="?android:attr/selectableItemBackground">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_flag_de"
-                            android:layout_marginEnd="8dp"/>
-
-                        <TextView
-                            android:id="@+id/tvGerman"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/german"
-                            android:textSize="14sp"
-                            android:textColor="?attr/android:textColorPrimary"/>
-                    </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/checkGerman"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginTop="4dp"
-                        android:src="@drawable/ic_check"
-                        android:visibility="gone"/>
-                </LinearLayout>
+                    android:text="@string/language"
+                    android:textSize="18sp"
+                    android:textColor="?attr/android:textColorPrimary"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-medium"/>
             </LinearLayout>
-        </LinearLayout>
+
+            <!-- Türkçe -->
+            <LinearLayout
+                android:id="@+id/optionTurkish"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                app:layout_constraintWidth_percent="0.33"
+                app:layout_constraintTop_toBottomOf="@id/languageTitleContainer"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/optionEnglish"
+                app:layout_constraintHorizontal_chainStyle="spread">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_flag_tr"
+                        android:layout_marginEnd="8dp"/>
+
+                    <TextView
+                        android:id="@+id/tvTurkish"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/turkish"
+                        android:textSize="14sp"
+                        android:textColor="?attr/android:textColorPrimary"/>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/checkTurkish"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/ic_check"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
+            <!-- İngilizce -->
+            <LinearLayout
+                android:id="@+id/optionEnglish"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                app:layout_constraintWidth_percent="0.33"
+                app:layout_constraintTop_toBottomOf="@id/languageTitleContainer"
+                app:layout_constraintStart_toEndOf="@id/optionTurkish"
+                app:layout_constraintEnd_toStartOf="@id/optionGerman">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_flag_en"
+                        android:layout_marginEnd="8dp"/>
+
+                    <TextView
+                        android:id="@+id/tvEnglish"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/english"
+                        android:textSize="14sp"
+                        android:textColor="?attr/android:textColorPrimary"/>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/checkEnglish"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/ic_check"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
+            <!-- Almanca -->
+            <LinearLayout
+                android:id="@+id/optionGerman"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                app:layout_constraintWidth_percent="0.33"
+                app:layout_constraintTop_toBottomOf="@id/languageTitleContainer"
+                app:layout_constraintStart_toEndOf="@id/optionEnglish"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_flag_de"
+                        android:layout_marginEnd="8dp"/>
+
+                    <TextView
+                        android:id="@+id/tvGerman"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/german"
+                        android:textSize="14sp"
+                        android:textColor="?attr/android:textColorPrimary"/>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/checkGerman"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/ic_check"
+                    android:visibility="gone"/>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
     <!-- Tema Seçenekleri Kartı -->
@@ -188,299 +219,280 @@
         app:cardCornerRadius="12dp"
         app:cardElevation="4dp"
         app:layout_constraintTop_toBottomOf="@id/cardLanguage"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginTop="16dp">
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        android:layout_marginTop="32dp">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="12dp">
 
             <!-- Tema Başlığı -->
-            <TextView
-                android:id="@+id/tvThemeTitle"
+            <LinearLayout
+                android:id="@+id/themeTitleContainer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/theme"
-                android:textSize="18sp"
-                android:textColor="?attr/android:textColorPrimary"
-                android:textStyle="bold"
-                android:fontFamily="sans-serif-medium"
-                android:layout_marginBottom="12dp"/>
-
-            <!-- Tema Seçenekleri (Yan Yana) -->
-            <LinearLayout
-                android:id="@+id/themeOptions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center">
+                android:gravity="center_vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginBottom="12dp">
 
-                <!-- Mavi Tema -->
-                <LinearLayout
-                    android:id="@+id/optionBlueTheme"
-                    android:layout_width="0dp"
+                <ImageView
+                    android:id="@+id/iconThemeTitle"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_palette"
+                    android:layout_marginEnd="8dp"
+                    app:tint="?attr/colorAccent"/>
+
+                <TextView
+                    android:id="@+id/tvThemeTitle"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:orientation="vertical"
-                    android:padding="8dp"
-                    android:gravity="center"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="?android:attr/selectableItemBackground">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_circle_blue"
-                            android:layout_marginBottom="8dp"/>
-
-                        <TextView
-                            android:id="@+id/tvBlueTheme"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/blue_theme"
-                            android:textSize="14sp"
-                            android:textColor="?attr/android:textColorPrimary"/>
-                    </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/checkBlueTheme"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginTop="4dp"
-                        android:src="@drawable/ic_check"
-                        android:visibility="gone"/>
-                </LinearLayout>
-
-                <!-- Kırmızı Tema -->
-                <LinearLayout
-                    android:id="@+id/optionRedTheme"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:orientation="vertical"
-                    android:padding="8dp"
-                    android:gravity="center"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="?android:attr/selectableItemBackground">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_circle_red"
-                            android:layout_marginBottom="8dp"/>
-
-                        <TextView
-                            android:id="@+id/tvRedTheme"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/red_theme"
-                            android:textSize="14sp"
-                            android:textColor="?attr/android:textColorPrimary"/>
-                    </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/checkRedTheme"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginTop="4dp"
-                        android:src="@drawable/ic_check"
-                        android:visibility="gone"/>
-                </LinearLayout>
-
-                <!-- Yeşil Tema -->
-                <LinearLayout
-                    android:id="@+id/optionGreenTheme"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:orientation="vertical"
-                    android:padding="8dp"
-                    android:gravity="center"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="?android:attr/selectableItemBackground">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_circle_green"
-                            android:layout_marginBottom="8dp"/>
-
-                        <TextView
-                            android:id="@+id/tvGreenTheme"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/green_theme"
-                            android:textSize="14sp"
-                            android:textColor="?attr/android:textColorPrimary"/>
-                    </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/checkGreenTheme"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginTop="4dp"
-                        android:src="@drawable/ic_check"
-                        android:visibility="gone"/>
-                </LinearLayout>
-
-                <!-- Turuncu Tema -->
-                <LinearLayout
-                    android:id="@+id/optionOrangeTheme"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:orientation="vertical"
-                    android:padding="8dp"
-                    android:gravity="center"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="?android:attr/selectableItemBackground">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_circle_orange"
-                            android:layout_marginBottom="8dp"/>
-
-                        <TextView
-                            android:id="@+id/tvOrangeTheme"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/orange_theme"
-                            android:textSize="13sp"
-                            android:textColor="?attr/android:textColorPrimary"/>
-                    </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/checkOrangeTheme"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginTop="4dp"
-                        android:src="@drawable/ic_check"
-                        android:visibility="gone"/>
-                </LinearLayout>
-
-                <!-- Gri Tema -->
-                <LinearLayout
-                    android:id="@+id/optionGrayTheme"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:orientation="vertical"
-                    android:padding="8dp"
-                    android:gravity="center"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="?android:attr/selectableItemBackground">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_circle_gray"
-                            android:layout_marginBottom="8dp"/>
-
-                        <TextView
-                            android:id="@+id/tvGrayTheme"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/gray_theme"
-                            android:textSize="14sp"
-                            android:textColor="?attr/android:textColorPrimary"/>
-                    </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/checkGrayTheme"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginTop="4dp"
-                        android:src="@drawable/ic_check"
-                        android:visibility="gone"/>
-                </LinearLayout>
-
-                <!-- Mor Tema -->
-                <LinearLayout
-                    android:id="@+id/optionPurpleTheme"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:orientation="vertical"
-                    android:padding="8dp"
-                    android:gravity="center"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="?android:attr/selectableItemBackground">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/ic_circle_purple"
-                            android:layout_marginBottom="8dp"/>
-
-                        <TextView
-                            android:id="@+id/tvPurpleTheme"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/purple_theme"
-                            android:textSize="14sp"
-                            android:textColor="?attr/android:textColorPrimary"/>
-                    </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/checkPurpleTheme"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginTop="4dp"
-                        android:src="@drawable/ic_check"
-                        android:visibility="gone"/>
-                </LinearLayout>
+                    android:text="@string/theme"
+                    android:textSize="18sp"
+                    android:textColor="?attr/android:textColorPrimary"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-medium"/>
             </LinearLayout>
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
 
-    <!-- Otomatik Kilit Kartı  -->
+            <!-- Tema Seçenekleri (İki Satır) -->
+            <!-- Satır 1: Mavi, Kırmızı, Yeşil -->
+            <LinearLayout
+                android:id="@+id/optionBlueTheme"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                app:layout_constraintWidth_percent="0.33"
+                app:layout_constraintTop_toBottomOf="@id/themeTitleContainer"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/optionRedTheme"
+                app:layout_constraintHorizontal_chainStyle="spread">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_circle_blue"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:id="@+id/tvBlueTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/blue_theme"
+                    android:textSize="14sp"
+                    android:textColor="?attr/android:textColorPrimary"/>
+
+                <ImageView
+                    android:id="@+id/checkBlueTheme"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/ic_check"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/optionRedTheme"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                app:layout_constraintWidth_percent="0.33"
+                app:layout_constraintTop_toBottomOf="@id/themeTitleContainer"
+                app:layout_constraintStart_toEndOf="@id/optionBlueTheme"
+                app:layout_constraintEnd_toStartOf="@id/optionGreenTheme">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_circle_red"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:id="@+id/tvRedTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/red_theme"
+                    android:textSize="14sp"
+                    android:textColor="?attr/android:textColorPrimary"/>
+
+                <ImageView
+                    android:id="@+id/checkRedTheme"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/ic_check"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/optionGreenTheme"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                app:layout_constraintWidth_percent="0.33"
+                app:layout_constraintTop_toBottomOf="@id/themeTitleContainer"
+                app:layout_constraintStart_toEndOf="@id/optionRedTheme"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_circle_green"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:id="@+id/tvGreenTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/green_theme"
+                    android:textSize="14sp"
+                    android:textColor="?attr/android:textColorPrimary"/>
+
+                <ImageView
+                    android:id="@+id/checkGreenTheme"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/ic_check"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
+            <!-- Satır 2: Turuncu, Gri, Mor -->
+            <LinearLayout
+                android:id="@+id/optionOrangeTheme"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                app:layout_constraintWidth_percent="0.33"
+                app:layout_constraintTop_toBottomOf="@id/optionBlueTheme"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/optionGrayTheme"
+                app:layout_constraintHorizontal_chainStyle="spread">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_circle_orange"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:id="@+id/tvOrangeTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/orange_theme"
+                    android:textSize="14sp"
+                    android:textColor="?attr/android:textColorPrimary"/>
+
+                <ImageView
+                    android:id="@+id/checkOrangeTheme"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/ic_check"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/optionGrayTheme"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                app:layout_constraintWidth_percent="0.33"
+                app:layout_constraintTop_toBottomOf="@id/optionRedTheme"
+                app:layout_constraintStart_toEndOf="@id/optionOrangeTheme"
+                app:layout_constraintEnd_toStartOf="@id/optionPurpleTheme">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_circle_gray"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:id="@+id/tvGrayTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gray_theme"
+                    android:textSize="14sp"
+                    android:textColor="?attr/android:textColorPrimary"/>
+
+                <ImageView
+                    android:id="@+id/checkGrayTheme"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/ic_check"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/optionPurpleTheme"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                app:layout_constraintWidth_percent="0.33"
+                app:layout_constraintTop_toBottomOf="@id/optionGreenTheme"
+                app:layout_constraintStart_toEndOf="@id/optionGrayTheme"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_circle_purple"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:id="@+id/tvPurpleTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/purple_theme"
+                    android:textSize="14sp"
+                    android:textColor="?attr/android:textColorPrimary"/>
+
+                <ImageView
+                    android:id="@+id/checkPurpleTheme"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/ic_check"
+                    android:visibility="gone"/>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+    <!-- Oto Kitlenme Kartı -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardAutoLock"
         android:layout_width="0dp"
@@ -489,43 +501,64 @@
         app:cardCornerRadius="12dp"
         app:cardElevation="4dp"
         app:layout_constraintTop_toBottomOf="@id/cardTheme"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginTop="16dp">
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        android:layout_marginTop="32dp">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="12dp">
 
             <!-- Otomatik Kilit Başlığı -->
-            <TextView
-                android:id="@+id/tvAutoLockTitle"
+            <LinearLayout
+                android:id="@+id/autoLockTitleContainer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/auto_lock"
-                android:textSize="18sp"
-                android:textColor="?attr/android:textColorPrimary"
-                android:textStyle="bold"
-                android:fontFamily="sans-serif-medium"
-                android:layout_marginBottom="12dp"/>
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
-            <!-- Otomatik Kilit Seçenekleri (Yan Yana) -->
+                <ImageView
+                    android:id="@+id/iconAutoLockTitle"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_clock"
+                    android:layout_marginEnd="8dp"
+                    app:tint="?attr/colorAccent"/>
+
+                <TextView
+                    android:id="@+id/tvAutoLockTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/auto_lock"
+                    android:textSize="18sp"
+                    android:textColor="?attr/android:textColorPrimary"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-medium"/>
+            </LinearLayout>
+
+            <!-- Seçenekleri İçeren LinearLayout -->
             <LinearLayout
-                android:id="@+id/autoLockOptions"
-                android:layout_width="match_parent"
+                android:id="@+id/optionsContainer"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center">
+                android:gravity="center"
+                android:weightSum="5.5"
+                app:layout_constraintTop_toBottomOf="@id/autoLockTitleContainer"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="12dp"
+                app:layout_constraintHorizontal_bias="0.5">
 
                 <!-- 20 Saniye -->
                 <LinearLayout
                     android:id="@+id/option20Seconds"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_weight="1"
                     android:orientation="vertical"
                     android:padding="4dp"
                     android:gravity="center"
@@ -542,17 +575,21 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/ic_clock"
-                            android:layout_marginEnd="8dp"
+                            android:src="@drawable/ic_hourglass_empty"
+                            android:layout_marginEnd="4dp"
                             app:tint="?attr/colorAccent"/>
 
                         <TextView
                             android:id="@+id/tv20Seconds"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:minWidth="40dp"
                             android:text="@string/seconds_20"
                             android:textSize="14sp"
-                            android:textColor="?attr/android:textColorPrimary"/>
+                            android:textColor="?attr/android:textColorPrimary"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:gravity="center"/>
                     </LinearLayout>
 
                     <ImageView
@@ -570,7 +607,7 @@
                     android:id="@+id/option30Seconds"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_weight="1"
                     android:orientation="vertical"
                     android:padding="4dp"
                     android:gravity="center"
@@ -587,17 +624,21 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/ic_clock"
-                            android:layout_marginEnd="8dp"
+                            android:src="@drawable/ic_hourglass_bottom"
+                            android:layout_marginEnd="4dp"
                             app:tint="?attr/colorAccent"/>
 
                         <TextView
                             android:id="@+id/tv30Seconds"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:minWidth="40dp"
                             android:text="@string/seconds_30"
                             android:textSize="14sp"
-                            android:textColor="?attr/android:textColorPrimary"/>
+                            android:textColor="?attr/android:textColorPrimary"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:gravity="center"/>
                     </LinearLayout>
 
                     <ImageView
@@ -615,7 +656,7 @@
                     android:id="@+id/option45Seconds"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_weight="1"
                     android:orientation="vertical"
                     android:padding="4dp"
                     android:gravity="center"
@@ -632,17 +673,21 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/ic_clock"
-                            android:layout_marginEnd="8dp"
+                            android:src="@drawable/ic_hourglass_top"
+                            android:layout_marginEnd="4dp"
                             app:tint="?attr/colorAccent"/>
 
                         <TextView
                             android:id="@+id/tv45Seconds"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:minWidth="40dp"
                             android:text="@string/seconds_45"
                             android:textSize="14sp"
-                            android:textColor="?attr/android:textColorPrimary"/>
+                            android:textColor="?attr/android:textColorPrimary"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:gravity="center"/>
                     </LinearLayout>
 
                     <ImageView
@@ -660,7 +705,7 @@
                     android:id="@+id/option60Seconds"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_weight="1"
                     android:orientation="vertical"
                     android:padding="4dp"
                     android:gravity="center"
@@ -677,17 +722,21 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/ic_clock"
-                            android:layout_marginEnd="8dp"
+                            android:src="@drawable/ic_hourglass_full"
+                            android:layout_marginEnd="4dp"
                             app:tint="?attr/colorAccent"/>
 
                         <TextView
                             android:id="@+id/tv60Seconds"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:minWidth="40dp"
                             android:text="@string/seconds_60"
                             android:textSize="14sp"
-                            android:textColor="?attr/android:textColorPrimary"/>
+                            android:textColor="?attr/android:textColorPrimary"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:gravity="center"/>
                     </LinearLayout>
 
                     <ImageView
@@ -705,7 +754,7 @@
                     android:id="@+id/optionNever"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="4"
+                    android:layout_weight="1.5"
                     android:orientation="vertical"
                     android:padding="4dp"
                     android:gravity="center"
@@ -722,17 +771,21 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/ic_clock"
-                            android:layout_marginEnd="8dp"
+                            android:src="@drawable/ic_hourglass_disabled"
+                            android:layout_marginEnd="4dp"
                             app:tint="?attr/colorAccent"/>
 
                         <TextView
                             android:id="@+id/tvNever"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:minWidth="60dp"
                             android:text="@string/never"
                             android:textSize="14sp"
-                            android:textColor="?attr/android:textColorPrimary"/>
+                            android:textColor="?attr/android:textColorPrimary"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:gravity="center"/>
                     </LinearLayout>
 
                     <ImageView
@@ -745,7 +798,5 @@
                         app:tint="?attr/colorAccent"/>
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView></androidx.constraintlayout.widget.ConstraintLayout>

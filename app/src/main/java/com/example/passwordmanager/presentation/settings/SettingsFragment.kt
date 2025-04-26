@@ -2,7 +2,6 @@ package com.example.passwordmanager.presentation.settings
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,8 +10,8 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.passwordmanager.R
+import com.example.passwordmanager.common.utils.Extensions.LocaleUtils
 import com.example.passwordmanager.databinding.FragmentSettingsBinding
-import java.util.*
 
 class SettingsFragment : Fragment() {
 
@@ -39,21 +38,24 @@ class SettingsFragment : Fragment() {
     }
 
     private fun setupLanguageOptions() {
-        val currentLanguage = sharedPreferences.getString("language", "tr") ?: "tr"
+        val currentLanguage = LocaleUtils.getCurrentLanguage(requireContext())
         Log.d("SettingsFragment", "Current language: $currentLanguage")
 
         updateLanguageSelection(currentLanguage)
 
         binding.optionTurkish.setOnClickListener {
             Log.d("SettingsFragment", "Selected language: tr")
+            animateIcon(it)
             changeLanguage("tr")
         }
         binding.optionEnglish.setOnClickListener {
             Log.d("SettingsFragment", "Selected language: en")
+            animateIcon(it)
             changeLanguage("en")
         }
         binding.optionGerman.setOnClickListener {
             Log.d("SettingsFragment", "Selected language: de")
+            animateIcon(it)
             changeLanguage("de")
         }
     }
@@ -66,26 +68,32 @@ class SettingsFragment : Fragment() {
 
         binding.optionBlueTheme.setOnClickListener {
             Log.d("SettingsFragment", "Selected theme: blue")
+            animateIcon(it)
             changeTheme("blue")
         }
         binding.optionGreenTheme.setOnClickListener {
             Log.d("SettingsFragment", "Selected theme: green")
+            animateIcon(it)
             changeTheme("green")
         }
         binding.optionOrangeTheme.setOnClickListener {
             Log.d("SettingsFragment", "Selected theme: orange")
+            animateIcon(it)
             changeTheme("orange")
         }
         binding.optionPurpleTheme.setOnClickListener {
             Log.d("SettingsFragment", "Selected theme: purple")
+            animateIcon(it)
             changeTheme("purple")
         }
         binding.optionRedTheme.setOnClickListener {
             Log.d("SettingsFragment", "Selected theme: red")
+            animateIcon(it)
             changeTheme("red")
         }
         binding.optionGrayTheme.setOnClickListener {
             Log.d("SettingsFragment", "Selected theme: gray")
+            animateIcon(it)
             changeTheme("gray")
         }
     }
@@ -98,22 +106,28 @@ class SettingsFragment : Fragment() {
 
         binding.option20Seconds.setOnClickListener {
             Log.d("SettingsFragment", "Selected auto lock: 20 seconds")
+            animateIcon(it)
             changeAutoLock(20)
         }
         binding.option30Seconds.setOnClickListener {
             Log.d("SettingsFragment", "Selected auto lock: 30 seconds")
+            animateIcon(it)
             changeAutoLock(30)
         }
         binding.option45Seconds.setOnClickListener {
             Log.d("SettingsFragment", "Selected auto lock: 45 seconds")
+            animateIcon(it)
             changeAutoLock(45)
         }
         binding.option60Seconds.setOnClickListener {
             Log.d("SettingsFragment", "Selected auto lock: 60 seconds")
+            animateIcon(it)
             changeAutoLock(60)
+
         }
         binding.optionNever.setOnClickListener {
             Log.d("SettingsFragment", "Selected auto lock: Never")
+            animateIcon(it)
             changeAutoLock(-1)
         }
     }
@@ -213,12 +227,10 @@ class SettingsFragment : Fragment() {
             )
         }
 
-        // Kart arka planları
         binding.cardLanguage.setCardBackgroundColor(ContextCompat.getColor(requireContext(), cardBackgroundColor))
         binding.cardTheme.setCardBackgroundColor(ContextCompat.getColor(requireContext(), cardBackgroundColor))
         binding.cardAutoLock.setCardBackgroundColor(ContextCompat.getColor(requireContext(), cardBackgroundColor))
 
-        // Metin renkleri
         binding.tvLanguageTitle.setTextColor(ContextCompat.getColor(requireContext(), textPrimaryColor))
         binding.tvThemeTitle.setTextColor(ContextCompat.getColor(requireContext(), textPrimaryColor))
         binding.tvAutoLockTitle.setTextColor(ContextCompat.getColor(requireContext(), textPrimaryColor))
@@ -237,7 +249,6 @@ class SettingsFragment : Fragment() {
         binding.tv60Seconds.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
         binding.tvNever.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
 
-        // Tik ikonları
         binding.checkTurkish.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
         binding.checkEnglish.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
         binding.checkGerman.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
@@ -256,15 +267,7 @@ class SettingsFragment : Fragment() {
 
     private fun changeLanguage(languageCode: String) {
         Log.d("SettingsFragment", "Changing language to: $languageCode")
-        val locale = Locale(languageCode)
-        Locale.setDefault(locale)
-        val config = Configuration(resources.configuration)
-        config.setLocale(locale)
-        requireContext().resources.updateConfiguration(config, requireContext().resources.displayMetrics)
-
-        val saved = sharedPreferences.edit().putString("language", languageCode).commit()
-        Log.d("SettingsFragment", "Language saved to SharedPreferences: $languageCode, Success: $saved")
-
+        LocaleUtils.setLanguage(requireContext(), languageCode)
         updateLanguageSelection(languageCode)
         requireActivity().recreate()
     }
@@ -285,6 +288,12 @@ class SettingsFragment : Fragment() {
         Log.d("SettingsFragment", "Auto lock saved to SharedPreferences: $lockTime, Success: $saved")
 
         updateAutoLockSelection(lockTime)
+    }
+    private fun animateIcon(view: View){
+        view.animate().scaleX(1.5f).scaleY(1.5f).setDuration(100).withEndAction{
+            view.scaleX = 1f
+            view.scaleY = 1f
+        }.start()
     }
 
     override fun onDestroyView() {

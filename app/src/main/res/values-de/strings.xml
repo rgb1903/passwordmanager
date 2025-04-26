@@ -1,47 +1,76 @@
 <resources>
+    <!-- Uygulama -->
     <string name="app_name">Passwort-Manager</string>
+
+    <!-- Şifreler -->
     <string name="passwords">Passwörter</string>
-    <string name="categories">Kategorien</string>
     <string name="search_passwords">Passwörter suchen</string>
     <string name="add_password">Passwort hinzufügen</string>
-    <string name="password_add_edit">Passwort Hinzufügen/Bearbeiten</string>
     <string name="password">Passwort</string>
-    <string name="back">Zurück</string>
+    <string name="password_add_edit">Passwort Hinzufügen/Bearbeiten</string>
     <string name="delete_password">Passwort löschen</string>
-    <string name="delete_category">Kategorie löschen</string>
+    <string name="pass_copy">Passwort kopiert</string>
+    <string name="pass_empty">Sie haben noch kein Passwort festgelegt!</string>
+
+    <!-- Kullanıcı adı -->
+    <string name="username">Benutzername</string>
+    <string name="name_copy">Benutzername kopiert</string>
+    <string name="name_empty">Sie haben noch keinen Benutzernamen festgelegt!</string>
+
+    <!-- Kategori -->
+    <string name="categories">Kategorien</string>
     <string name="add_category">Kategorie hinzufügen</string>
-    <string name="category_name">Kategorie Name</string>
+    <string name="delete_category">Kategorie löschen</string>
+    <string name="category_name">Kategoriename</string>
     <string name="category">Kategorie</string>
+
+    <!-- Genel UI -->
     <string name="title">Titel</string>
+    <string name="back">Zurück</string>
     <string name="save">Speichern</string>
     <string name="delete">Löschen</string>
     <string name="cancel">Abbrechen</string>
     <string name="add">Hinzufügen</string>
+    <string name="copy">Kopieren</string>
+    <string name="dropdown_arrow">Dropdown</string>
+    <string name="fill_all">Bitte füllen Sie alle Felder aus und wählen Sie eine Kategorie</string>
+
+    <!-- Ayarlar -->
+    <string name="settings">Einstellungen</string>
     <string name="language">Sprache</string>
     <string name="theme">Thema</string>
+
+    <!-- Diller -->
     <string name="turkish">Türkisch</string>
     <string name="english">Englisch</string>
     <string name="german">Deutsch</string>
+
+    <!-- Temalar -->
     <string name="blue_theme">Blau</string>
     <string name="green_theme">Grün</string>
     <string name="purple_theme">Lila</string>
     <string name="orange_theme">Orange</string>
     <string name="red_theme">Rot</string>
     <string name="gray_theme">Grau</string>
-    <string name="settings">Einstellungen</string>
-    <string name="username">Benutzername</string>
-    <string name="info">Mit dem Fingerabdruckscanner authentifizieren</string>
+
+    <!-- Biyometrik doğrulama -->
+    <string name="verify">Biometrische Authentifizierung</string>
+    <string name="verify_info">Bestätigen Sie Ihre Identität, um auf vertrauliche Daten zuzugreifen</string>
+    <string name="finger_print">Verwenden Sie Ihren Fingerabdruck, um sich anzumelden!</string>
+    <string name="prompt_text">Verwenden Sie Ihren Fingerabdruck, um Ihre Identität zu bestätigen.</string>
+    <string name="unsuccess">Biometrische Authentifizierung fehlgeschlagen!</string>
+    <string name="auth_fail">Authentifizierung fehlgeschlagen!</string>
+    <string name="info">Authentifizieren Sie sich mit dem Fingerabdrucksensor</string>
     <string name="info_sub">Verifizieren Sie Ihre Identität für sicheren Zugriff</string>
     <string name="desc">Fingerabdruck-Symbol</string>
+    <string name="not_work">Diese App funktioniert nicht auf Geräten, die keine biometrische Authentifizierung unterstützen. Bitte richten Sie Fingerabdruck oder Gesichtserkennung in den Geräteeinstellungen ein.</string>
+    <string name="not_verify">Biometrische Verifizierung ist nicht verfügbar. Diese App wird auf diesem Gerät nicht unterstützt.</string>
+
+    <!-- Otomatik kilitlenme -->
     <string name="auto_lock">Automatische Sperrzeit (Sekunden)</string>
     <string name="seconds_20">20</string>
     <string name="seconds_30">30</string>
     <string name="seconds_45">45</string>
     <string name="seconds_60">60</string>
     <string name="never">Nie</string>
-    <string name="not_work">Diese App funktioniert nicht auf Geräten, die keine biometrische Authentifizierung unterstützen. Bitte richten Sie Fingerabdruck oder Gesichtserkennung in den Geräteeinstellungen ein.</string>
-
-
-
-
 </resources>
