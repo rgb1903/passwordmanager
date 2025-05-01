@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -13,6 +14,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.passwordmanager.R
+import com.example.passwordmanager.common.utils.ThemeManager
 import com.example.passwordmanager.databinding.FragmentPasswordListBinding
 import com.example.passwordmanager.domain.model.Password
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,6 +49,7 @@ class PasswordListFragment : Fragment() {
         setupRecyclerView(categoryId)
         setupAddPasswordButton(categoryId)
         observeState()
+        setupThemeSwitch()
         viewModel.loadPasswords(categoryId)
     }
 
@@ -101,6 +104,26 @@ class PasswordListFragment : Fragment() {
                 categoryId = categoryId
             )
             findNavController().navigate(action)
+        }
+    }
+    private fun setupThemeSwitch() {
+        binding.switchButton.isChecked = ThemeManager.isDarkModeEnabled(requireContext())
+
+
+        binding.switchButton.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                ThemeManager.saveTheme(requireContext(), ThemeManager.THEME_DARK)
+                ThemeManager.saveDarkMode(requireContext(), true)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                val savedTheme = ThemeManager.getCurrentTheme(requireContext()).takeIf { it != ThemeManager.THEME_DARK }
+                    ?: ThemeManager.THEME_BLUE
+                ThemeManager.saveTheme(requireContext(), savedTheme)
+                ThemeManager.saveDarkMode(requireContext(), false)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                requireActivity().setTheme(ThemeManager.getThemeStyle(savedTheme))
+            }
+            requireActivity().recreate()
         }
     }
     override fun onDestroyView() {

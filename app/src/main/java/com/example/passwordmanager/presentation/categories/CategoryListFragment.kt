@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.passwordmanager.R
+import com.example.passwordmanager.common.utils.ThemeManager
 import com.example.passwordmanager.databinding.FragmentCategoryListBinding
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -39,6 +41,7 @@ class CategoryListFragment : Fragment() {
         setupRecyclerView()
         observeCategories()
         setupFab()
+        setupThemeSwitch()
     }
 
     private fun setupRecyclerView() {
@@ -51,6 +54,7 @@ class CategoryListFragment : Fragment() {
             adapter = categoryAdapter
         }
     }
+
 
     private fun observeCategories() {
         viewLifecycleOwner.lifecycleScope.launch {
@@ -93,5 +97,25 @@ class CategoryListFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+    private fun setupThemeSwitch() {
+        binding.switchButton.isChecked = ThemeManager.isDarkModeEnabled(requireContext())
+
+
+        binding.switchButton.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                ThemeManager.saveTheme(requireContext(), ThemeManager.THEME_DARK)
+                ThemeManager.saveDarkMode(requireContext(), true)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                val savedTheme = ThemeManager.getCurrentTheme(requireContext()).takeIf { it != ThemeManager.THEME_DARK }
+                    ?: ThemeManager.THEME_BLUE
+                ThemeManager.saveTheme(requireContext(), savedTheme)
+                ThemeManager.saveDarkMode(requireContext(), false)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                requireActivity().setTheme(ThemeManager.getThemeStyle(savedTheme))
+            }
+            requireActivity().recreate()
+        }
     }
 }

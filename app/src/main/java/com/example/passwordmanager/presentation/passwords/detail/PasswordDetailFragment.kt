@@ -2,11 +2,11 @@ package com.example.passwordmanager.presentation.password.detail
 
 
 import android.os.Bundle
+import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -21,6 +21,7 @@ import com.example.passwordmanager.common.utils.Extensions.ClipboardUtils.copyTo
 import com.example.passwordmanager.databinding.FragmentPasswordDetailBinding
 import com.example.passwordmanager.domain.model.Password
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -192,16 +193,19 @@ class PasswordDetailFragment : Fragment() {
         }
 
         binding.tilPassword.setEndIconOnClickListener {
-            val textPass = getString(R.string.pass_copy)
             val textEmpty = getString(R.string.pass_empty)
             val password = binding.etPassword.text.toString().trim()
 
             biometricAction = {
                 if (password.isNotEmpty()) {
-                    copyToClipboard(requireContext())
-                    showCustomToast(requireContext(),"$textPass: $password")
+                    lifecycleScope.launch {
+                        binding.etPassword.transformationMethod = null
+                        delay(20000)
+                        binding.etPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+                        binding.etPassword.setSelection(binding.etPassword.text?.length ?: 0)
+                    }
                 } else {
-                    showCustomToast(requireContext(),textEmpty)
+                    showCustomToast(requireContext(), textEmpty)
                 }
             }
             biometricPrompt.authenticate(promptInfo)

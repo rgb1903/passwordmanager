@@ -50,4 +50,11 @@
     <color name="text_primary_gray">#37474F</color>
     <color name="text_secondary_gray">#90A4AE</color>
 
+    <color name="background_dark">#607D8B</color>
+    <color name="accent_dark">#025E55</color>
+    <color name="card_background_dark">#403F3F</color>
+    <color name="text_primary_dark">#E0E0E0</color>
+    <color name="text_secondary_dark">#A0A0A0</color>
+    <color name="error_red_dark">#CF6679</color>
+
 </resources>

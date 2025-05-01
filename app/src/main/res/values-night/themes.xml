@@ -1,7 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.PasswordManager" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    <style name="Theme.PasswordManager.Dark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="background">@color/background_dark</item>
+        <item name="cardBackgroundColor">@color/card_background_dark</item>
+        <item name="colorAccent">@color/accent_dark</item>
+        <item name="colorPrimary">@color/accent_dark</item>
+        <item name="colorPrimaryDark">@color/accent_dark</item>
+        <item name="android:textColorPrimary">@color/text_primary_dark</item>
+        <item name="android:textColorSecondary">@color/text_secondary_dark</item>
     </style>
 </resources>
