@@ -1,6 +1,7 @@
 package com.example.passwordmanager.common.utils
 
 import android.content.Context
+import android.content.res.Configuration
 import androidx.core.content.ContextCompat
 import com.example.passwordmanager.R
 
@@ -16,7 +17,7 @@ object ThemeManager {
 
     private const val PREFS_NAME = "settings_prefs"
     private const val PREF_THEME = "theme"
-    private const val PREF_DARK_MODE = "dark_mode"
+    private const val PREF_PREVIOUS_THEME = "previous_theme"
 
     fun getThemeColors(context: Context, theme: String): ThemeColors {
         return when (theme) {
@@ -95,7 +96,7 @@ object ThemeManager {
             THEME_ORANGE -> R.style.Theme_PasswordManager_Orange
             THEME_RED -> R.style.Theme_PasswordManager_Red
             THEME_GRAY -> R.style.Theme_PasswordManager_Gray
-            THEME_DARK -> R.style.Theme_PasswordManager_Dark // themes.xml'deki karanlık tema
+            THEME_DARK -> R.style.Theme_PasswordManager_Dark
             else -> R.style.Theme_PasswordManager_Blue
         }
     }
@@ -107,18 +108,31 @@ object ThemeManager {
 
     fun getCurrentTheme(context: Context): String {
         val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        return prefs.getString(PREF_THEME, THEME_BLUE) ?: THEME_BLUE
+        // SharedPreferences'ta tema yoksa cihazın karanlık mod ayarını kontrol et
+        val savedTheme = prefs.getString(PREF_THEME, null)
+        if (savedTheme != null) {
+            return savedTheme
+        }
+        // İlk kurulum: Cihaz karanlık moddaysa THEME_DARK, değilse THEME_BLUE
+        val isDeviceDarkMode = (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
+        return if (isDeviceDarkMode) THEME_DARK else THEME_BLUE
     }
 
-    fun saveDarkMode(context: Context, isDarkMode: Boolean) {
+    // Önceki temayı kaydetmek için yeni fonksiyon
+    fun savePreviousTheme(context: Context, theme: String) {
         val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        prefs.edit().putBoolean(PREF_DARK_MODE, isDarkMode).apply()
+        prefs.edit().putString(PREF_PREVIOUS_THEME, theme).apply()
     }
 
-    fun isDarkModeEnabled(context: Context): Boolean {
+    // Önceki temayı almak için yeni fonksiyon
+    fun getPreviousTheme(context: Context): String {
         val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        return prefs.getBoolean(PREF_DARK_MODE, false)
+        return prefs.getString(PREF_PREVIOUS_THEME, THEME_BLUE) ?: THEME_BLUE
     }
+
+    // PREF_DARK_MODE artık gereksiz, bu yüzden kaldırıyoruz
+    // fun saveDarkMode(context: Context, isDarkMode: Boolean) { ... }
+    // fun isDarkModeEnabled(context: Context): Boolean { ... }
 
     data class ThemeColors(
         val backgroundColor: Int,

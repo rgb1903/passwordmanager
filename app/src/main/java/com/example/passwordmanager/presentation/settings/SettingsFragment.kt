@@ -34,7 +34,7 @@ class SettingsFragment : Fragment() {
         setupLanguageOptions()
         setupThemeOptions()
         setupAutoLockOptions()
-        applyThemeUI()
+
     }
 
     private fun setupLanguageOptions() {
@@ -178,92 +178,7 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    private fun applyThemeUI() {
-        val theme = sharedPreferences.getString("theme", "blue") ?: "blue"
-        Log.d("SettingsFragment", "Applying UI theme: $theme")
 
-        val (cardBackgroundColor, textPrimaryColor, textSecondaryColor, checkIconColor) = when (theme) {
-            "blue" -> listOf(
-                R.color.card_background_blue,
-                R.color.text_primary_blue,
-                R.color.text_secondary_blue,
-                R.color.accent_blue
-            )
-            "green" -> listOf(
-                R.color.card_background_green,
-                R.color.text_primary_green,
-                R.color.text_secondary_green,
-                R.color.accent_green
-            )
-            "orange" -> listOf(
-                R.color.card_background_orange,
-                R.color.text_primary_orange,
-                R.color.text_secondary_orange,
-                R.color.accent_orange
-            )
-            "purple" -> listOf(
-                R.color.card_background_purple,
-                R.color.text_primary_purple,
-                R.color.text_secondary_purple,
-                R.color.accent_purple
-            )
-            "red" -> listOf(
-                R.color.card_background_red,
-                R.color.text_primary_red,
-                R.color.text_secondary_red,
-                R.color.accent_red
-            )
-            "gray" -> listOf(
-                R.color.card_background_gray,
-                R.color.text_primary_gray,
-                R.color.text_secondary_gray,
-                R.color.accent_gray
-            )
-            else -> listOf(
-                R.color.card_background_blue,
-                R.color.text_primary_blue,
-                R.color.text_secondary_blue,
-                R.color.accent_blue
-            )
-        }
-
-        binding.cardLanguage.setCardBackgroundColor(ContextCompat.getColor(requireContext(), cardBackgroundColor))
-        binding.cardTheme.setCardBackgroundColor(ContextCompat.getColor(requireContext(), cardBackgroundColor))
-        binding.cardAutoLock.setCardBackgroundColor(ContextCompat.getColor(requireContext(), cardBackgroundColor))
-
-        binding.tvLanguageTitle.setTextColor(ContextCompat.getColor(requireContext(), textPrimaryColor))
-        binding.tvThemeTitle.setTextColor(ContextCompat.getColor(requireContext(), textPrimaryColor))
-        binding.tvAutoLockTitle.setTextColor(ContextCompat.getColor(requireContext(), textPrimaryColor))
-        binding.tvTurkish.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
-        binding.tvEnglish.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
-        binding.tvGerman.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
-        binding.tvBlueTheme.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
-        binding.tvGreenTheme.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
-        binding.tvPurpleTheme.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
-        binding.tvOrangeTheme.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
-        binding.tvRedTheme.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
-        binding.tvGrayTheme.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
-        binding.tv20Seconds.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
-        binding.tv30Seconds.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
-        binding.tv45Seconds.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
-        binding.tv60Seconds.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
-        binding.tvNever.setTextColor(ContextCompat.getColor(requireContext(), textSecondaryColor))
-
-        binding.checkTurkish.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
-        binding.checkEnglish.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
-        binding.checkGerman.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
-        binding.checkBlueTheme.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
-        binding.checkGreenTheme.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
-        binding.checkPurpleTheme.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
-        binding.checkOrangeTheme.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
-        binding.checkRedTheme.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
-        binding.checkGrayTheme.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
-        binding.check20Seconds.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
-        binding.check30Seconds.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
-        binding.check45Seconds.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
-        binding.check60Seconds.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
-        binding.checkNever.setColorFilter(ContextCompat.getColor(requireContext(), checkIconColor))
-    }
 
     private fun changeLanguage(languageCode: String) {
         Log.d("SettingsFragment", "Changing language to: $languageCode")
@@ -278,7 +193,6 @@ class SettingsFragment : Fragment() {
         Log.d("SettingsFragment", "Theme saved to SharedPreferences: $theme, Success: $saved")
 
         updateThemeSelection(theme)
-        applyThemeUI()
         requireActivity().recreate()
     }
 

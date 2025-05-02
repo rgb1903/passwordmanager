@@ -107,21 +107,20 @@ class PasswordListFragment : Fragment() {
         }
     }
     private fun setupThemeSwitch() {
-        binding.switchButton.isChecked = ThemeManager.isDarkModeEnabled(requireContext())
-
+        binding.switchButton.isChecked = ThemeManager.getCurrentTheme(requireContext()) == ThemeManager.THEME_DARK
 
         binding.switchButton.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
+                // Karanlık modu aç: Mevcut temayı kaydet
+                val currentTheme = ThemeManager.getCurrentTheme(requireContext())
+                if (currentTheme != ThemeManager.THEME_DARK) {
+                    ThemeManager.savePreviousTheme(requireContext(), currentTheme)
+                }
                 ThemeManager.saveTheme(requireContext(), ThemeManager.THEME_DARK)
-                ThemeManager.saveDarkMode(requireContext(), true)
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             } else {
-                val savedTheme = ThemeManager.getCurrentTheme(requireContext()).takeIf { it != ThemeManager.THEME_DARK }
-                    ?: ThemeManager.THEME_BLUE
-                ThemeManager.saveTheme(requireContext(), savedTheme)
-                ThemeManager.saveDarkMode(requireContext(), false)
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                requireActivity().setTheme(ThemeManager.getThemeStyle(savedTheme))
+                // Karanlık modu kapat: Önceki temayı geri yükle
+                val previousTheme = ThemeManager.getPreviousTheme(requireContext())
+                ThemeManager.saveTheme(requireContext(), previousTheme)
             }
             requireActivity().recreate()
         }

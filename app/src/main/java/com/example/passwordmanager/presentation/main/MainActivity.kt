@@ -1,6 +1,5 @@
 package com.example.passwordmanager.presentation.main
 
-import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -21,7 +20,6 @@ import com.example.passwordmanager.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.util.Locale
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -35,9 +33,7 @@ class MainActivity : AppCompatActivity() {
     private var lastPausedTime: Long = 0L
     private var isThemeChanged = false
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -51,11 +47,7 @@ class MainActivity : AppCompatActivity() {
         setupAutoLock()
 
         checkLockOnStart()
-
-
     }
-
-
 
     private fun setupTheme() {
         val theme = ThemeManager.getCurrentTheme(this)
@@ -64,20 +56,24 @@ class MainActivity : AppCompatActivity() {
         isThemeChanged = true
     }
 
-    private fun loadLocale() {
-        val sharedPreferences = getSharedPreferences("settings_prefs", MODE_PRIVATE)
-        val language = sharedPreferences.getString("language", "tr") ?: "tr"
-        Log.d("MainActivity", "Loading language: $language")
+    private fun setupStatusBar() {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        val theme = ThemeManager.getCurrentTheme(this)
+        val themeColors = ThemeManager.getThemeColors(this, theme)
+        Log.d("MainActivity", "Setting status bar color for theme: $theme")
 
-        val locale = Locale(language)
-        Locale.setDefault(locale)
-
-        val config = Configuration(resources.configuration)
-        config.setLocale(locale)
-        resources.updateConfiguration(config, resources.displayMetrics)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            window.statusBarColor = themeColors.statusBarColor
+            // Karanlık temada açık ikonlar, diğer temalarda varsayılan ikonlar
+            window.decorView.systemUiVisibility = if (theme == ThemeManager.THEME_DARK) {
+                View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            } else {
+                0
+            }
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.statusBarColor = themeColors.statusBarColor
+        }
     }
-
-
 
     private fun setupNavigation() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -159,20 +155,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupStatusBar() {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        val theme = ThemeManager.getCurrentTheme(this)
-        val themeColors = ThemeManager.getThemeColors(this, theme)
-        Log.d("MainActivity", "Setting status bar color for theme: $theme")
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            window.statusBarColor = themeColors.statusBarColor
-            window.decorView.systemUiVisibility = 0
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.statusBarColor = themeColors.statusBarColor
-        }
-    }
-
     private fun setupAutoLock() {
         val sharedPreferences = getSharedPreferences("settings_prefs", MODE_PRIVATE)
         startLockTimer(sharedPreferences)
@@ -241,6 +223,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
     override fun onPause() {
         super.onPause()
         val sharedPreferences = getSharedPreferences("settings_prefs", MODE_PRIVATE)
@@ -275,7 +258,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 lastPausedTime = 0L
-                return // Zamanlayıcıyı tekrar başlatmaya gerek yok, kilit ekranına gidildi
+                return
             }
         }
 
@@ -297,7 +280,7 @@ class MainActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
-    private fun handleNav(){
+    private fun handleNav() {
         val currentDestination = navController.currentDestination?.id
         when (currentDestination) {
             R.id.loginFragment -> finish()
@@ -325,6 +308,5 @@ class MainActivity : AppCompatActivity() {
             }
             else -> super.onBackPressed()
         }
-
     }
 }

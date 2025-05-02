@@ -5,11 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.passwordmanager.R
 import com.example.passwordmanager.databinding.ItemCategoryBinding
 import com.example.passwordmanager.domain.model.Category
 
 class CategoryAdapter(
-    private val onCategoryClick: (Category) -> Unit
+    private val onCategoryClick: (Category) -> Unit,
+    private val onCategoryDelete: (Category) -> Unit
 ) : ListAdapter<Category, CategoryAdapter.CategoryViewHolder>(CategoryDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
@@ -25,8 +27,12 @@ class CategoryAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(category: Category) {
             binding.tvCategoryName.text = category.name
-            category.icon?.let { binding.ivCategoryIcon.setImageResource(it) }
+            category.icon?.let { binding.ivCategoryIcon.setImageResource(it) }  ?: binding.ivCategoryIcon.setImageResource(
+                R.drawable.ic_category)
             binding.root.setOnClickListener { onCategoryClick(category) }
+            binding.ivDelete.setOnClickListener { onCategoryDelete(category)
+
+            }
         }
     }
 

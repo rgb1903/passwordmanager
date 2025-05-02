@@ -66,6 +66,17 @@
         <item name="cardBackgroundColor">@color/card_background_gray</item>
     </style>
 
+    <!-- Karanlık Tema -->
+    <style name="Theme.PasswordManager.Dark" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="background">@color/background_dark</item>
+        <item name="cardBackgroundColor">@color/card_background_dark</item>
+        <item name="colorAccent">@color/accent_dark</item>
+        <item name="colorPrimary">@color/accent_dark</item>
+        <item name="colorPrimaryDark">@color/accent_dark</item>
+        <item name="android:textColorPrimary">@color/text_primary_dark</item>
+        <item name="android:textColorSecondary">@color/text_secondary_dark</item>
+    </style>
+
 
     <!-- Varsayılan Tema -->
     <style name="AppTheme" parent="Theme.PasswordManager.Blue" />

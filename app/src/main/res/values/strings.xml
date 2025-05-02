@@ -24,6 +24,9 @@
     <string name="delete_category">Kategoriyi sil</string>
     <string name="category_name">Kategori Adı</string>
     <string name="category">Kategori</string>
+    <string name="error_duplicate_category">Bu kategori zaten var</string>
+    <string name="delete_category_title">Kategoriyi Sil</string>
+    <string name="delete_category_message">"%1$s kategorisini silmek istediğinize emin misiniz?</string>
 
     <!-- Genel UI -->
     <string name="title">Başlık</string>
@@ -35,6 +38,7 @@
     <string name="copy">Kopyala</string>
     <string name="dropdown_arrow">Dropdown</string>
     <string name="fill_all">Lütfen tüm alanları doldurun ve bir kategori seçin</string>
+    <string name="choose_icon">İkon Seç</string>
 
     <!-- Ayarlar -->
     <string name="settings">Ayarlar</string>
@@ -74,4 +78,6 @@
     <string name="seconds_45">45</string>
     <string name="seconds_60">60</string>
     <string name="never">Asla</string>
+
+    <string name="selected_icon">null</string>
 </resources>

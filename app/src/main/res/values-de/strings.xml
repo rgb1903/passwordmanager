@@ -23,6 +23,10 @@
     <string name="delete_category">Kategorie löschen</string>
     <string name="category_name">Kategoriename</string>
     <string name="category">Kategorie</string>
+    <string name="error_duplicate_category">Diese Kategorie existiert bereits</string>
+    <string name="delete_category_title">Kategorie löschen</string>
+    <string name="delete_category_message">Möchten Sie die Kategorie „%1$s“ wirklich löschen?</string>
+
 
     <!-- Genel UI -->
     <string name="title">Titel</string>
@@ -34,6 +38,8 @@
     <string name="copy">Kopieren</string>
     <string name="dropdown_arrow">Dropdown</string>
     <string name="fill_all">Bitte füllen Sie alle Felder aus und wählen Sie eine Kategorie</string>
+    <string name="choose_icon">Symbol auswählen</string>
+
 
     <!-- Ayarlar -->
     <string name="settings">Einstellungen</string>
@@ -73,4 +79,7 @@
     <string name="seconds_45">45</string>
     <string name="seconds_60">60</string>
     <string name="never">Nie</string>
+
+    <string name="selected_icon">null</string>
+
 </resources>
