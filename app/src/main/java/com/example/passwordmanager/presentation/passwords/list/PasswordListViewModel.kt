@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PasswordListViewModel @Inject constructor(
-    private val repository: PasswordRepository, // Doğrudan repository enjekte ediliyor
+    private val repository: PasswordRepository,
     private val deletePasswordUseCase: DeletePasswordUseCase,
     private val searchPasswordsUseCase: SearchPasswordsUseCase
 ) : BaseViewModel() {

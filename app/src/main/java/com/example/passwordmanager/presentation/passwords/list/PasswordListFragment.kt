@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -111,14 +110,12 @@ class PasswordListFragment : Fragment() {
 
         binding.switchButton.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                // Karanlık modu aç: Mevcut temayı kaydet
                 val currentTheme = ThemeManager.getCurrentTheme(requireContext())
                 if (currentTheme != ThemeManager.THEME_DARK) {
                     ThemeManager.savePreviousTheme(requireContext(), currentTheme)
                 }
                 ThemeManager.saveTheme(requireContext(), ThemeManager.THEME_DARK)
             } else {
-                // Karanlık modu kapat: Önceki temayı geri yükle
                 val previousTheme = ThemeManager.getPreviousTheme(requireContext())
                 ThemeManager.saveTheme(requireContext(), previousTheme)
             }

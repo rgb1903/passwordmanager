@@ -84,7 +84,6 @@ class CategoryListFragment : Fragment() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_category, null)
         val binding = DialogAddCategoryBinding.bind(dialogView)
 
-        // İkon paleti RecyclerView'ı kur
         var selectedIcon: Int? = null
         val iconAdapter = IconAdapter(IconPalette.ICONS) { iconResId ->
             selectedIcon = iconResId
@@ -114,7 +113,7 @@ class CategoryListFragment : Fragment() {
                         is AddCategoryResult.Error -> {
                             binding.tilCategoryName.error = getString(result.errorCode)
                         }
-                        null -> {} // Boş blok kaldırılabilir, ama korudum
+                        null -> {} 
                     }
                 }
             }

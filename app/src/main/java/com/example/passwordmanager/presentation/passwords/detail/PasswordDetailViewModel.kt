@@ -1,4 +1,4 @@
-package com.example.passwordmanager.presentation.password.detail
+package com.example.passwordmanager.presentation.passwords.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

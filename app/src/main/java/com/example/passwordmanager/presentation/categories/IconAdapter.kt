@@ -50,7 +50,6 @@ class IconAdapter(
                 }
             )
 
-            // Animasyon: Seçiliyse ölçek artır, değilse normale dön
             val scale = if (isSelected) 1.1f else 1.0f
             AnimatorSet().apply {
                 playTogether(

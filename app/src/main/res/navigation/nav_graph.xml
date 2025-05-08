@@ -72,7 +72,7 @@
 
     <fragment
         android:id="@+id/passwordDetailFragment"
-        android:name="com.example.passwordmanager.presentation.password.detail.PasswordDetailFragment"
+        android:name="com.example.passwordmanager.presentation.passwords.detail.PasswordDetailFragment"
         android:label="Şifre Detay">
         <argument
             android:name="password"
