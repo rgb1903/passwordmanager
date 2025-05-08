@@ -69,8 +69,8 @@
     <!-- Karanlık Tema -->
     <style name="Theme.PasswordManager.Dark" parent="Theme.MaterialComponents.NoActionBar">
         <item name="background">@color/background_dark</item>
-        <item name="cardBackgroundColor">@color/card_background_dark</item>
-        <item name="colorAccent">@color/accent_dark</item>
+        <item name="cardBackgroundColor">#5E5E5E</item>
+        <item name="colorAccent">#047A6F</item>
         <item name="colorPrimary">@color/accent_dark</item>
         <item name="colorPrimaryDark">@color/accent_dark</item>
         <item name="android:textColorPrimary">@color/text_primary_dark</item>

@@ -1,6 +1,5 @@
 package com.example.passwordmanager.presentation.passwords.detail
 
-
 import android.os.Bundle
 import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
@@ -68,7 +67,7 @@ class PasswordDetailFragment : Fragment() {
 
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 super.onAuthenticationSucceeded(result)
-                when (result.authenticationType) {
+                when(result.authenticationType) {
                     BiometricPrompt.AUTHENTICATION_RESULT_TYPE_BIOMETRIC -> {
                         handleBiometricSuccess()
                     }
